@@ -15,7 +15,7 @@ const JobSchema = new mongoose.Schema({
   },
   submissionDate: {
     type: Date,
-    required: true,
+    // required: true,
   },
   applicationStatus: {
     type: String,
