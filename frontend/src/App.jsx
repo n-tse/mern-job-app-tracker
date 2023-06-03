@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./App.css";
-import Table from './components/Table';
+import Table from "./components/Table";
 import Modal from "./components/Modal";
 
 function App() {
@@ -17,14 +17,18 @@ function App() {
         console.log(error);
       }
     }
-    
+
     fetchData();
   }, []);
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className="app-container">
-      {/* <Table jobsList={jobsList} /> */}
-      {!showModal && <Modal />}
+      {!showModal && <Table jobsList={jobsList} setShowModal={setShowModal} />}
+      {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} />}
     </div>
   );
 }

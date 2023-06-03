@@ -1,8 +1,8 @@
 import React from "react";
 import './css/Table.css';
 
-const Table = ({ jobsList }) => {
-  
+const Table = ({ jobsList, setShowModal }) => {
+
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
     for (let i = 1; i < string.length; i++) {
@@ -32,7 +32,7 @@ const Table = ({ jobsList }) => {
         <tbody>
           {jobsList.map((job) => {
             const rowId = job._id;
-            console.log({ rowId });
+            // console.log({ rowId });
             return (
               <tr key={rowId}>
                 {Object.keys(job).map((field, fieldIdx) => {
@@ -45,6 +45,7 @@ const Table = ({ jobsList }) => {
           })}
         </tbody>
       </table>
+      <button onClick={() => setShowModal(true)}>Add Job</button>
     </div>
   );
 };
