@@ -6,7 +6,7 @@ import Modal from "./components/Modal";
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="app-container">
       {/* <Table jobsList={jobsList} /> */}
-      {showModal && <Modal />}
+      {!showModal && <Modal />}
     </div>
   );
 }
