@@ -1,8 +1,9 @@
 import React from "react";
 import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill } from "react-icons/bs";
+import { getJobsList, deleteJob } from "../utils/handleApi";
 
-const Table = ({ jobsList, handleEditRow }) => {
+const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
     for (let i = 1; i < string.length; i++) {
@@ -13,6 +14,21 @@ const Table = ({ jobsList, handleEditRow }) => {
       }
     }
     return res;
+  };
+
+  const handleDeleteRow = async (id) => {
+    const confirmation = confirm("Are you sure you want to delete this row?");
+    if (confirmation) {
+      try {
+        await deleteJob(id);
+        const jobsData = await getJobsList();
+        setJobsList(jobsData);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return;
+    }
   };
 
   return (
@@ -43,8 +59,14 @@ const Table = ({ jobsList, handleEditRow }) => {
                 })}
                 <td>
                   <span className="actions">
-                    <BsPencilSquare id="edit-icon" onClick={() => handleEditRow(rowId)}/>
-                    <BsFillTrashFill id="delete-icon"/>
+                    <BsPencilSquare
+                      id="edit-icon"
+                      onClick={() => handleEditRow(rowId)}
+                    />
+                    <BsFillTrashFill
+                      id="delete-icon"
+                      onClick={() => handleDeleteRow(rowId)}
+                    />
                   </span>
                 </td>
               </tr>

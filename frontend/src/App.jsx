@@ -48,7 +48,7 @@ function App() {
               Add Job
             </button>
           </div>
-          <Table jobsList={jobsList} handleEditRow={handleEditRow} />
+          <Table jobsList={jobsList} setJobsList={setJobsList} handleEditRow={handleEditRow} />
         </div>
       )}
       {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit} />}

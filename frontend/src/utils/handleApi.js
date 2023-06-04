@@ -26,3 +26,12 @@ export const updateJob = async (id, updatedEntry) => {
     console.log(error);
   }
 }
+
+export const deleteJob = async (id) => {
+  try {
+    const response = await axios.delete(`http://localhost:5001/jobs/${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
