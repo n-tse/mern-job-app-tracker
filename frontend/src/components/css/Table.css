@@ -3,3 +3,22 @@ table, th, td {
   border-collapse: collapse;
   padding: 1rem;
 }
+
+.actions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#edit-icon {
+  margin: 0 5px 0 0;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+#delete-icon {
+  color: red;
+  margin: 0 0 0 5px;
+  cursor: pointer;
+  font-size: 1.3rem;
+}

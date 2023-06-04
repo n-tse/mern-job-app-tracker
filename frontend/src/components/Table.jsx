@@ -1,8 +1,8 @@
 import React from "react";
-import './css/Table.css';
+import "./css/Table.css";
+import { BsPencilSquare, BsFillTrashFill } from "react-icons/bs";
 
 const Table = ({ jobsList, setShowModal }) => {
-
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
     for (let i = 1; i < string.length; i++) {
@@ -13,7 +13,7 @@ const Table = ({ jobsList, setShowModal }) => {
       }
     }
     return res;
-  }
+  };
 
   return (
     <div>
@@ -27,6 +27,7 @@ const Table = ({ jobsList, setShowModal }) => {
                     <th key={idx}>{convertToHeader(field)}</th>
                   )
               )}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -40,12 +41,17 @@ const Table = ({ jobsList, setShowModal }) => {
                     field[0] !== "_" && <td key={fieldIdx}>{job[field]}</td>
                   );
                 })}
+                <td>
+                  <span className="actions">
+                    <BsPencilSquare id="edit-icon" onClick={() => editRow(rowId)}/>{" "}
+                    <BsFillTrashFill id="delete-icon"/>
+                  </span>
+                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      <button onClick={() => setShowModal(true)}>Add Job</button>
     </div>
   );
 };
