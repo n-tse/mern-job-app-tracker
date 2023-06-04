@@ -2,6 +2,7 @@ import React from "react";
 import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill } from "react-icons/bs";
 import { getJobsList, deleteJob } from "../utils/handleApi";
+import { Tooltip } from 'react-tooltip';
 
 const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   const convertToHeader = (string) => {
@@ -62,10 +63,26 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
                     <BsPencilSquare
                       id="edit-icon"
                       onClick={() => handleEditRow(rowId)}
+                      data-tooltip-content="Edit"
+                      data-tooltip-id={`edit-tooltip-${rowId}`}
                     />
                     <BsFillTrashFill
                       id="delete-icon"
                       onClick={() => handleDeleteRow(rowId)}
+                      data-tooltip-content="Delete"
+                      data-tooltip-id={`delete-tooltip-${rowId}`}
+                    />
+                    <Tooltip
+                      id={`edit-tooltip-${rowId}`}
+                      place="bottom"
+                      effect="solid"
+                      className="customized-tooltip"
+                    />
+                    <Tooltip
+                      id={`delete-tooltip-${rowId}`}
+                      place="bottom"
+                      effect="solid"
+                      className="customized-tooltip"
                     />
                   </span>
                 </td>

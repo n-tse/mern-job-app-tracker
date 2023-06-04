@@ -22,3 +22,7 @@ table, th, td {
   cursor: pointer;
   font-size: 1.3rem;
 }
+
+.customized-tooltip {
+  font-family: Arial, Helvetica, sans-serif;
+}
