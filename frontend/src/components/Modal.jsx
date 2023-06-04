@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./css/Modal.css";
 import { getJobsList, postJob } from '../utils/handleApi';
 
-const Modal = ({ closeModal, setJobsList }) => {
+const Modal = ({ closeModal, setJobsList, rowValues }) => {
   const emptyFormValues = {
     title: "",
     company: "",
@@ -13,7 +13,7 @@ const Modal = ({ closeModal, setJobsList }) => {
     notes: "",
   };
   
-  const [formData, setFormData] = useState(emptyFormValues);
+  const [formData, setFormData] = useState(rowValues || emptyFormValues);
 
   function getTodaysDate() {
     const date = new Date();

@@ -8,6 +8,7 @@ import { BsPlusLg } from "react-icons/bs";
 function App() {
   const [jobsList, setJobsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [rowDataToEdit, setRowDataToEdit] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +23,16 @@ function App() {
     fetchData();
   }, []);
 
+  const handleEditRow = (id) => {
+    const data = jobsList.filter(row => row._id === id && row);
+    // console.log(data[0]);
+    setRowDataToEdit(data[0]);
+    setShowModal(true);
+  }
+
   const closeModal = () => {
     setShowModal(false);
+    setRowDataToEdit({})
   };
 
   return (
@@ -39,10 +48,10 @@ function App() {
               Add Job
             </button>
           </div>
-          <Table jobsList={jobsList} setShowModal={setShowModal} />
+          <Table jobsList={jobsList} handleEditRow={handleEditRow} />
         </div>
       )}
-      {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} />}
+      {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit} />}
     </div>
   );
 }

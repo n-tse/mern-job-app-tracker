@@ -2,7 +2,7 @@ import React from "react";
 import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill } from "react-icons/bs";
 
-const Table = ({ jobsList, setShowModal }) => {
+const Table = ({ jobsList, handleEditRow }) => {
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
     for (let i = 1; i < string.length; i++) {
@@ -43,7 +43,7 @@ const Table = ({ jobsList, setShowModal }) => {
                 })}
                 <td>
                   <span className="actions">
-                    <BsPencilSquare id="edit-icon" onClick={() => editRow(rowId)}/>{" "}
+                    <BsPencilSquare id="edit-icon" onClick={() => handleEditRow(rowId)}/>
                     <BsFillTrashFill id="delete-icon"/>
                   </span>
                 </td>
