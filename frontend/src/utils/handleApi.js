@@ -17,3 +17,12 @@ export const postJob = async (formData) => {
     console.log(error);
   }
 }
+
+export const updateJob = async (id, updatedEntry) => {
+  try {
+    const response = await axios.put(`http://localhost:5001/jobs/${id}`, updatedEntry);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

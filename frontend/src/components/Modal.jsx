@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/Modal.css";
-import { getJobsList, postJob } from '../utils/handleApi';
+import { getJobsList, postJob, updateJob } from '../utils/handleApi';
 
 const Modal = ({ closeModal, setJobsList, rowValues }) => {
   const emptyFormValues = {
@@ -29,7 +29,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     setFormData({ ...formData, [target.name]: target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleAddNewJob = async (e) => {
     e.preventDefault();
     try {
       await postJob(formData);
@@ -43,10 +43,24 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     closeModal();
   };
 
+  const handleUpdateJob = async (e) => {
+    e.preventDefault();
+    try {
+      await updateJob(rowValues._id, formData);
+      setFormData(emptyFormValues);
+
+      const jobsData = await getJobsList();
+      setJobsList(jobsData);
+    } catch (error) {
+      console.log(error);
+    }
+    closeModal();
+  }
+
   return (
     <div className="modal-container">
       <div className="modal">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={rowValues ? handleUpdateJob : handleAddNewJob}>
           <label htmlFor="title">Job Title</label>
           <input
             type="text"
@@ -96,7 +110,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
             value={formData.notes}
             onChange={handleChange}
           ></input>
-          <button type="submit">Add Job</button>
+          <button type="submit">{rowValues ? "Update Job" : "Add Job"}</button>
         </form>
       </div>
     </div>
