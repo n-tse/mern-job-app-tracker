@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./css/Modal.css";
+import { getJobsList, postJob } from '../utils/handleApi';
 
 const Modal = ({ closeModal, setJobsList }) => {
   const emptyFormValues = {
@@ -12,6 +12,7 @@ const Modal = ({ closeModal, setJobsList }) => {
     response: "",
     notes: "",
   };
+  
   const [formData, setFormData] = useState(emptyFormValues);
 
   function getTodaysDate() {
@@ -28,27 +29,17 @@ const Modal = ({ closeModal, setJobsList }) => {
     setFormData({ ...formData, [target.name]: target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    axios
-      .post("http://localhost:5001/jobs", formData)
-      .then((response) => {
-        console.log(response);
-        setFormData(emptyFormValues);
-        axios
-          .get("http://localhost:5001/jobs")
-          .then((data) => {
-            console.log(data);
-            setJobsList(data.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      await postJob(formData);
+      setFormData(emptyFormValues);
+  
+      const jobsData = await getJobsList();
+      setJobsList(jobsData);
+    } catch (error) {
+      console.log(error);
+    }
     closeModal();
   };
 

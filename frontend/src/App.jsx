@@ -3,20 +3,21 @@ import axios from "axios";
 import "./App.css";
 import Table from "./components/Table";
 import Modal from "./components/Modal";
+import { getJobsList } from './utils/handleApi';
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/jobs/");
-        setJobsList(response.data);
+        const data = await getJobsList();
+        setJobsList(data);
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     fetchData();
   }, []);
