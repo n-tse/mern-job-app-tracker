@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "./App.css";
 import Table from "./components/Table";
 import Modal from "./components/Modal";
-import { getJobsList } from './utils/handleApi';
+import { getJobsList } from "./utils/handleApi";
+import { BsPlusLg } from "react-icons/bs";
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
@@ -28,7 +28,20 @@ function App() {
 
   return (
     <div className="app-container">
-      {!showModal && <Table jobsList={jobsList} setShowModal={setShowModal} />}
+      {!showModal && (
+        <div className="content-container">
+          <div className="button-container">
+            <button
+              className="add-job-button"
+              onClick={() => setShowModal(true)}
+            >
+              <BsPlusLg style={{ marginRight: 6 }} />
+              Add Job
+            </button>
+          </div>
+          <Table jobsList={jobsList} setShowModal={setShowModal} />
+        </div>
+      )}
       {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} />}
     </div>
   );
