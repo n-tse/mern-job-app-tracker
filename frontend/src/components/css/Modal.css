@@ -1,4 +1,39 @@
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 3rem 3rem 2rem;
+  width: 25em;
+  background-color: aliceblue;
+}
+
 form {
   display: flex;
   flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-button {
+  width: fit-content;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 1rem auto 0;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/Modal.css";
-import { getJobsList, postJob, updateJob } from '../utils/handleApi';
+import { getJobsList, postJob, updateJob } from "../utils/handleApi";
 
 const Modal = ({ closeModal, setJobsList, rowValues }) => {
   const emptyFormValues = {
@@ -12,7 +12,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     response: "",
     notes: "",
   };
-  
+
   const [formData, setFormData] = useState(rowValues || emptyFormValues);
 
   function getTodaysDate() {
@@ -34,7 +34,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     try {
       await postJob(formData);
       setFormData(emptyFormValues);
-  
+
       const jobsData = await getJobsList();
       setJobsList(jobsData);
     } catch (error) {
@@ -55,47 +55,57 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
       console.log(error);
     }
     closeModal();
-  }
+  };
 
   return (
-    <div className="modal-container">
+    <div className="modal-container" onClick={(e) => e.target.className === "modal-container" && closeModal()}>
       <div className="modal">
         <form onSubmit={rowValues ? handleUpdateJob : handleAddNewJob}>
-          <label htmlFor="title">Job Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          ></input>
-          <label htmlFor="company">Company</label>
-          <input
-            type="text"
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-          ></input>
-          <label htmlFor="url">Url</label>
-          <input
-            type="text"
-            name="url"
-            value={formData.url}
-            onChange={handleChange}
-          ></input>
-          <label htmlFor="submissionDate">Submission Date</label>
-          <input
-            type="text"
-            name="submissionDate"
-            value={formData.submissionDate}
-            onChange={handleChange}
-          ></input>
-          <label htmlFor="applicationStatus">Application Status</label>
-          <input
-            type="text"
-            name="applicationStatus"
-            value={formData.applicationStatus}
-            onChange={handleChange}
-          ></input>
+          <div className="form-group">
+            <label htmlFor="title">Job Title</label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="company">Company</label>
+            <input
+              type="text"
+              name="company"
+              value={formData.company}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="url">Url</label>
+            <input
+              type="text"
+              name="url"
+              value={formData.url}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="submissionDate">Submission Date</label>
+            <input
+              type="text"
+              name="submissionDate"
+              value={formData.submissionDate}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="applicationStatus">Application Status</label>
+            <input
+              type="text"
+              name="applicationStatus"
+              value={formData.applicationStatus}
+              onChange={handleChange}
+            ></input>
+          </div>
           <label htmlFor="response">Response</label>
           <input
             type="text"
@@ -103,14 +113,17 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
             value={formData.response}
             onChange={handleChange}
           ></input>
-          <label htmlFor="notes">Notes</label>
-          <input
-            type="text"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-          ></input>
-          <button type="submit">{rowValues ? "Update Job" : "Add Job"}</button>
+          <div className="form-group"></div>
+          <div className="form-group">
+            <label htmlFor="notes">Notes</label>
+            <input
+              type="text"
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <button type="submit" className="submit-button">{rowValues ? "Update Job" : "Add Job"}</button>
         </form>
       </div>
     </div>

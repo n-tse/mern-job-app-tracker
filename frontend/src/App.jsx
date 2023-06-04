@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className="app-container">
-      {!showModal && (
+
         <div className="content-container">
           <div className="button-container">
             <button
@@ -50,7 +50,6 @@ function App() {
           </div>
           <Table jobsList={jobsList} setJobsList={setJobsList} handleEditRow={handleEditRow} />
         </div>
-      )}
       {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit} />}
     </div>
   );
