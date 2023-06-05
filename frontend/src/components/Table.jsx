@@ -33,8 +33,8 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   };
 
   return (
-    <div>
-      <table>
+    <div className="table-container">
+      <table className="table">
         <thead>
           <tr>
             {jobsList.length > 0 &&
@@ -47,12 +47,12 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-body">
           {jobsList.map((job) => {
             const rowId = job._id;
             // console.log({ rowId });
             return (
-              <tr key={rowId}>
+              <tr key={rowId} className="job-row">
                 {Object.keys(job).map((field, fieldIdx) => {
                   return (
                     field[0] !== "_" && <td key={fieldIdx}>{job[field]}</td>
