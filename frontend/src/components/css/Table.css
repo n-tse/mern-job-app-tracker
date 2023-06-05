@@ -19,11 +19,42 @@
 
 .table th, .table td {
   padding: 1rem;
+  /* max-width: 250px; */
+  /* overflow: auto; */
+  /* text-overflow: ellipsis; */
+  /* white-space:nowrap; */
 }
 
-/* .table td {
-  border-top: 1px solid #eee;
-} */
+/* CSS */
+.cell-content {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* cursor: pointer; */
+  position: relative;
+}
+
+.text-content {
+  max-height: 1.5rem;
+  /* overflow: hidden; */
+}
+
+.text-content.expanded {
+  max-height: none;
+}
+
+.job-row.expanded .cell-content {
+  max-width: 250px;
+  white-space: normal;
+  overflow: auto;
+}
+
+
+
+.table td {
+  cursor: pointer;
+}
 
 .table-body > *:not(:first-child) {
   border-top: 1px solid #eee;

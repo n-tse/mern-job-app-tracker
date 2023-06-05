@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill } from "react-icons/bs";
 import { getJobsList, deleteJob } from "../utils/handleApi";
 import { Tooltip } from 'react-tooltip';
 
 const Table = ({ jobsList, setJobsList, handleEditRow }) => {
+  const [expandedRow, setExpandedRow] = useState(null);
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
     for (let i = 1; i < string.length; i++) {
@@ -16,6 +17,14 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
     }
     return res;
   };
+
+  const handleCellClick = (rowId) => {
+    if (expandedRow === rowId) {
+      setExpandedRow(null);
+    } else {
+      setExpandedRow(rowId);
+    }
+  }
 
   const handleDeleteRow = async (id) => {
     const confirmation = confirm("Are you sure you want to delete this row?");
@@ -51,11 +60,18 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
           {jobsList.map((job) => {
             const rowId = job._id;
             // console.log({ rowId });
+            const isExpanded = expandedRow === rowId;
             return (
-              <tr key={rowId} className="job-row">
+              <tr key={rowId} className={`job-row ${isExpanded ? 'expanded' : ''}`}>
                 {Object.keys(job).map((field, fieldIdx) => {
                   return (
-                    field[0] !== "_" && <td key={fieldIdx}>{job[field]}</td>
+                    field[0] !== "_" && <td key={fieldIdx} onClick={() => handleCellClick(rowId)}>
+                      <div className="cell-content">
+                        <div className={`text-content ${isExpanded ? 'expanded' : ''}`}>
+                          {job[field]}
+                        </div>
+                      </div>
+                    </td>
                   );
                 })}
                 <td>
