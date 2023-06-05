@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./css/Table.css";
-import { BsPencilSquare, BsFillTrashFill } from "react-icons/bs";
+import { BsPencilSquare, BsFillTrashFill, BsArrowDownUp } from "react-icons/bs";
 import { getJobsList, deleteJob } from "../utils/handleApi";
-import { Tooltip } from 'react-tooltip';
+import { Tooltip } from "react-tooltip";
 
 const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -24,7 +24,7 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
     } else {
       setExpandedRow(rowId);
     }
-  }
+  };
 
   const handleDeleteRow = async (id) => {
     const confirmation = confirm("Are you sure you want to delete this row?");
@@ -41,18 +41,36 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
     }
   };
 
+  const handleSubmissionDateClick = () => {
+    const reversedEntries = [...jobsList].reverse();
+    setJobsList(reversedEntries);
+  };
+
   return (
     <div className="table-container">
       <table className="table">
         <thead>
           <tr>
             {jobsList.length > 0 &&
-              Object.keys(jobsList[0]).map(
-                (field, idx) =>
+              Object.keys(jobsList[0]).map((field, idx) => {
+                const isSubmissionDate = field === "submissionDate";
+                return (
                   field[0] !== "_" && (
-                    <th key={idx}>{convertToHeader(field)}</th>
+                    <th
+                      key={idx}
+                      onClick={isSubmissionDate ? handleSubmissionDateClick : null}
+                      style={isSubmissionDate ? { cursor: "pointer" } : {}}
+                    >
+                      {convertToHeader(field)}
+                      {isSubmissionDate && (
+                        <BsArrowDownUp
+                          style={{ margin: "0 2px", fontSize: 12 }}
+                        />
+                      )}
+                    </th>
                   )
-              )}
+                );
+              })}
             <th>Actions</th>
           </tr>
         </thead>
@@ -62,16 +80,25 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
             // console.log({ rowId });
             const isExpanded = expandedRow === rowId;
             return (
-              <tr key={rowId} className={`job-row ${isExpanded ? 'expanded' : ''}`}>
+              <tr
+                key={rowId}
+                className={`job-row ${isExpanded ? "expanded" : ""}`}
+              >
                 {Object.keys(job).map((field, fieldIdx) => {
                   return (
-                    field[0] !== "_" && <td key={fieldIdx} onClick={() => handleCellClick(rowId)}>
-                      <div className="cell-content">
-                        <div className={`text-content ${isExpanded ? 'expanded' : ''}`}>
-                          {job[field]}
+                    field[0] !== "_" && (
+                      <td key={fieldIdx} onClick={() => handleCellClick(rowId)}>
+                        <div className="cell-content">
+                          <div
+                            className={`text-content ${
+                              isExpanded ? "expanded" : ""
+                            }`}
+                          >
+                            {job[field]}
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
+                    )
                   );
                 })}
                 <td>
