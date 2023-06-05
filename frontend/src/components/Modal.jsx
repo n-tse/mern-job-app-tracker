@@ -58,7 +58,10 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
   };
 
   return (
-    <div className="modal-container" onClick={(e) => e.target.className === "modal-container" && closeModal()}>
+    <div
+      className="modal-container"
+      onClick={(e) => e.target.className === "modal-container" && closeModal()}
+    >
       <div className="modal">
         <form onSubmit={rowValues ? handleUpdateJob : handleAddNewJob}>
           <div className="form-group">
@@ -106,24 +109,29 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
               onChange={handleChange}
             ></input>
           </div>
-          <label htmlFor="response">Response</label>
-          <input
-            type="text"
-            name="response"
-            value={formData.response}
-            onChange={handleChange}
-          ></input>
-          <div className="form-group"></div>
           <div className="form-group">
-            <label htmlFor="notes">Notes</label>
+            <label htmlFor="response">Response</label>
             <input
               type="text"
-              name="notes"
-              value={formData.notes}
+              name="response"
+              value={formData.response}
               onChange={handleChange}
             ></input>
           </div>
-          <button type="submit" className="submit-button">{rowValues ? "Update Job" : "Add Job"}</button>
+          <div className="form-group">
+            <label htmlFor="notes">Notes</label>
+            <textarea
+              type="text"
+              name="notes"
+              value={formData.notes}
+              rows={4}
+              style={{resize:"none"}}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          <button type="submit" className="submit-button">
+            {rowValues ? "Update Job" : "Add Job"}
+          </button>
         </form>
       </div>
     </div>
