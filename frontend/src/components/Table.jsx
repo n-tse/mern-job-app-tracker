@@ -46,12 +46,12 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
     setJobsList(reversedEntries);
   };
 
-  const handleJobTitleClick = () => {
+  const handleColumnHeaderClick = (columnName) => {
     const sortedEntries = [...jobsList].sort((a, b) => {
-      if (a.title.toLowerCase() < b.title.toLowerCase()) {
+      if (a[columnName].toLowerCase() < b[columnName].toLowerCase()) {
         return -1;
       }
-      if (a.title.toLowerCase() > b.title.toLowerCase()) {
+      if (a[columnName].toLowerCase() > b[columnName].toLowerCase()) {
         return 1;
       }
       return 0;
@@ -71,13 +71,13 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
           <tr>
             {jobsList.length > 0 &&
               Object.keys(jobsList[0]).map((field, idx) => {
-                const isTitle = field === "title";
+                const isString = field === "title" || field === "company" || field === "url" || field === "applicationStatus" || field === "response";
                 const isSubmissionDate = field === "submissionDate";
                 return (
                   field[0] !== "_" && (
                     <th
                       key={idx}
-                      onClick={isTitle ? handleJobTitleClick : isSubmissionDate ? handleSubmissionDateClick : null}
+                      onClick={isString ? () => handleColumnHeaderClick(field) : isSubmissionDate ? handleSubmissionDateClick : null}
                       style={isSubmissionDate ? { cursor: "pointer" } : {}}
                     >
                       {convertToHeader(field)}
