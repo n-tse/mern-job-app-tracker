@@ -46,6 +46,24 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
     setJobsList(reversedEntries);
   };
 
+  const handleJobTitleClick = () => {
+    const sortedEntries = [...jobsList].sort((a, b) => {
+      if (a.title.toLowerCase() < b.title.toLowerCase()) {
+        return -1;
+      }
+      if (a.title.toLowerCase() > b.title.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const sortedEntriesReversed = sortedEntries.slice().reverse();
+    const isSortedAscending = JSON.stringify(sortedEntries) === JSON.stringify(jobsList);
+    const newSortedEntries = isSortedAscending ? sortedEntriesReversed : sortedEntries;
+
+    setJobsList(newSortedEntries);
+  }
+
   return (
     <div className="table-container">
       <table className="table">
@@ -53,12 +71,13 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
           <tr>
             {jobsList.length > 0 &&
               Object.keys(jobsList[0]).map((field, idx) => {
+                const isTitle = field === "title";
                 const isSubmissionDate = field === "submissionDate";
                 return (
                   field[0] !== "_" && (
                     <th
                       key={idx}
-                      onClick={isSubmissionDate ? handleSubmissionDateClick : null}
+                      onClick={isTitle ? handleJobTitleClick : isSubmissionDate ? handleSubmissionDateClick : null}
                       style={isSubmissionDate ? { cursor: "pointer" } : {}}
                     >
                       {convertToHeader(field)}
