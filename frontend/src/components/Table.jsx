@@ -3,6 +3,8 @@ import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill, BsArrowDownUp } from "react-icons/bs";
 import { getJobsList, deleteJob } from "../utils/handleApi";
 import { Tooltip } from "react-tooltip";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -78,14 +80,10 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
                     <th
                       key={idx}
                       onClick={isString ? () => handleColumnHeaderClick(field) : isSubmissionDate ? handleSubmissionDateClick : null}
-                      style={isSubmissionDate ? { cursor: "pointer" } : {}}
+                      style={(isString || isSubmissionDate) ? { cursor: "pointer" } : {}}
                     >
                       {convertToHeader(field)}
-                      {isSubmissionDate && (
-                        <BsArrowDownUp
-                          style={{ margin: "0 2px", fontSize: 12 }}
-                        />
-                      )}
+                      {(isString || isSubmissionDate) && <FontAwesomeIcon icon={faSort} style={{margin:"0 0 0 3px", fontSize:13}}/>}
                     </th>
                   )
                 );
