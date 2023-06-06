@@ -127,7 +127,7 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
                               isExpanded ? "expanded" : ""
                             }`}
                           >
-                            {job[field]}
+                            {field === "url" ? <a href={`http://${job[field]}`} target="_blank">{job[field]}</a> : job[field]}
                           </div>
                         </div>
                       </td>
