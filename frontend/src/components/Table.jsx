@@ -44,8 +44,24 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   };
 
   const handleSubmissionDateClick = () => {
-    const reversedEntries = [...jobsList].reverse();
-    setJobsList(reversedEntries);
+    setJobsList((prevList) => {
+      const copy = [...prevList];
+      const sortOrder = copy.length > 0 && copy[0].submissionDate < copy[copy.length - 1].submissionDate ? 1 : -1;
+      
+      const sortedEntries = copy.sort((a, b) => {
+        const dateA = new Date(a.submissionDate);
+        const dateB = new Date(b.submissionDate);
+        if (dateA > dateB) {
+          return sortOrder * -1;
+        } else if (dateA < dateB) {
+          return sortOrder * 1;
+        } else {
+          return copy.indexOf(b) - copy.indexOf(a);
+        }
+      });
+      
+      return sortedEntries;
+    });
   };
 
   const handleColumnHeaderClick = (columnName) => {
