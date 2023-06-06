@@ -40,3 +40,12 @@
   background-image: linear-gradient(#3e97db, #0065b8);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bbb; 
+  border-radius: 10px;
+}

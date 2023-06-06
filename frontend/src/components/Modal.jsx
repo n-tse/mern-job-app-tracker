@@ -8,8 +8,8 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     company: "",
     url: "",
     submissionDate: getTodaysDate(),
-    applicationStatus: "",
-    response: "",
+    applicationStatus: "Completed",
+    response: "Pending",
     notes: "",
   };
 
@@ -102,21 +102,19 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
           </div>
           <div className="form-group">
             <label htmlFor="applicationStatus">Application Status</label>
-            <input
-              type="text"
-              name="applicationStatus"
-              value={formData.applicationStatus}
-              onChange={handleChange}
-            ></input>
+            <select name="applicationStatus" value={formData.applicationStatus} onChange={handleChange}>
+              <option value="Completed">Completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Not Started">Not Started</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="response">Response</label>
-            <input
-              type="text"
-              name="response"
-              value={formData.response}
-              onChange={handleChange}
-            ></input>
+            <select id="response" name="response" value={formData.response} onChange={handleChange}>
+              <option value="Pending">Pending</option>
+              <option value="Not Selected">Not Selected</option>
+              <option value="Interview">Interview</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="notes">Notes</label>
