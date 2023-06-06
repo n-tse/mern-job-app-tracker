@@ -3,8 +3,8 @@ import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill, BsArrowDownUp } from "react-icons/bs";
 import { getJobsList, deleteJob } from "../utils/handleApi";
 import { Tooltip } from "react-tooltip";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 
 const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -44,22 +44,40 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
   };
 
   const handleSubmissionDateClick = () => {
+    let numberOfNAs = 0;
+    for (let i = 0; i < jobsList.length; i++) {
+      if (jobsList[i].submissionDate === "N/A") {
+        numberOfNAs++;
+      }
+    }
     setJobsList((prevList) => {
       const copy = [...prevList];
-      const sortOrder = copy.length > 0 && copy[0].submissionDate < copy[copy.length - 1].submissionDate ? 1 : -1;
-      
+      const sortOrder =
+        copy.length > 0 &&
+        copy[0].submissionDate < copy[copy.length - numberOfNAs - 1].submissionDate
+          ? 1
+          : -1;
+
       const sortedEntries = copy.sort((a, b) => {
-        const dateA = new Date(a.submissionDate);
-        const dateB = new Date(b.submissionDate);
-        if (dateA > dateB) {
-          return sortOrder * -1;
-        } else if (dateA < dateB) {
-          return sortOrder * 1;
+        if (a.submissionDate === "N/A" && b.submissionDate === "N/A") {
+          return 0;
+        } else if (a.submissionDate === "N/A") {
+          return 1;
+        } else if (b.submissionDate === "N/A") {
+          return -1;
         } else {
-          return copy.indexOf(b) - copy.indexOf(a);
+          const dateA = new Date(a.submissionDate);
+          const dateB = new Date(b.submissionDate);
+          if (dateA > dateB) {
+            return sortOrder * -1;
+          } else if (dateA < dateB) {
+            return sortOrder * 1;
+          } else {
+            return copy.indexOf(b) - copy.indexOf(a);
+          }
         }
       });
-      
+
       return sortedEntries;
     });
   };
@@ -76,11 +94,14 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
     });
 
     const sortedEntriesReversed = sortedEntries.slice().reverse();
-    const isSortedAscending = JSON.stringify(sortedEntries) === JSON.stringify(jobsList);
-    const newSortedEntries = isSortedAscending ? sortedEntriesReversed : sortedEntries;
+    const isSortedAscending =
+      JSON.stringify(sortedEntries) === JSON.stringify(jobsList);
+    const newSortedEntries = isSortedAscending
+      ? sortedEntriesReversed
+      : sortedEntries;
 
     setJobsList(newSortedEntries);
-  }
+  };
 
   return (
     <div className="table-container">
@@ -89,17 +110,37 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
           <tr>
             {jobsList.length > 0 &&
               Object.keys(jobsList[0]).map((field, idx) => {
-                const isString = field === "title" || field === "company" || field === "url" || field === "applicationStatus" || field === "response";
+                const isString =
+                  field === "title" ||
+                  field === "company" ||
+                  field === "url" ||
+                  field === "applicationStatus" ||
+                  field === "response";
                 const isSubmissionDate = field === "submissionDate";
                 return (
                   field[0] !== "_" && (
                     <th
                       key={idx}
-                      onClick={isString ? () => handleColumnHeaderClick(field) : isSubmissionDate ? handleSubmissionDateClick : null}
-                      style={(isString || isSubmissionDate) ? { cursor: "pointer" } : {}}
+                      onClick={
+                        isString
+                          ? () => handleColumnHeaderClick(field)
+                          : isSubmissionDate
+                          ? handleSubmissionDateClick
+                          : null
+                      }
+                      style={
+                        isString || isSubmissionDate
+                          ? { cursor: "pointer" }
+                          : {}
+                      }
                     >
                       {convertToHeader(field)}
-                      {(isString || isSubmissionDate) && <FontAwesomeIcon icon={faSort} style={{margin:"0 0 0 3px", fontSize:13}}/>}
+                      {(isString || isSubmissionDate) && (
+                        <FontAwesomeIcon
+                          icon={faSort}
+                          style={{ margin: "0 0 0 3px", fontSize: 13 }}
+                        />
+                      )}
                     </th>
                   )
                 );
@@ -127,7 +168,13 @@ const Table = ({ jobsList, setJobsList, handleEditRow }) => {
                               isExpanded ? "expanded" : ""
                             }`}
                           >
-                            {field === "url" ? <a href={`http://${job[field]}`} target="_blank">{job[field]}</a> : job[field]}
+                            {field === "url" ? (
+                              <a href={`http://${job[field]}`} target="_blank">
+                                {job[field]}
+                              </a>
+                            ) : (
+                              job[field]
+                            )}
                           </div>
                         </div>
                       </td>
