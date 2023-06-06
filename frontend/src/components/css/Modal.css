@@ -35,9 +35,8 @@ form {
   height: 2rem;
 }
 
-.form-group input[type="text"] {
-  /* font-size: 1.2rem;
-  padding: 2px 4px; */
+.form-group input[type="date"] {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .form-group textarea[type="text"],

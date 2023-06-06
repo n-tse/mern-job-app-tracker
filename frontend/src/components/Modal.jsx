@@ -22,7 +22,8 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     month = month.length > 1 ? month : "0" + month;
     let day = date.getDate().toString();
     day = day.length > 1 ? day : "0" + day;
-    return month + "/" + day + "/" + year;
+    // return month + "/" + day + "/" + year;
+    return `${year}-${month}-${day}`
   }
 
   const handleChange = ({ target }) => {
@@ -119,7 +120,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
           <div className="form-group">
             <label htmlFor="submissionDate">Submission Date</label>
             <input
-              type="text"
+              type="date"
               name="submissionDate"
               value={formData.submissionDate}
               onChange={handleChange}
