@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/Modal.css";
 import { getJobsList, postJob, updateJob } from "../utils/handleApi";
 
@@ -26,8 +26,21 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
   }
 
   const handleChange = ({ target }) => {
-    setFormData({ ...formData, [target.name]: target.value });
+    const { name, value } = target;
+    setFormData({...formData, [name]: value});
   };
+
+  useEffect(() => {
+    const updateResponseField = () => {
+      if (formData.applicationStatus !== "Completed") {
+        setFormData({...formData, response: "N/A"})
+      } else if (formData.response === "N/A") {
+        setFormData({...formData, response: "Pending"})
+      }
+    }
+
+    updateResponseField();
+  }, [formData.applicationStatus])
 
   const handleAddNewJob = async (e) => {
     e.preventDefault();
@@ -62,6 +75,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
       className="modal-container"
       onClick={(e) => e.target.className === "modal-container" && closeModal()}
     >
+      {console.log('formData', formData)}
       <div className="modal">
         <form onSubmit={rowValues ? handleUpdateJob : handleAddNewJob}>
           <div className="form-group">
@@ -110,10 +124,12 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
           </div>
           <div className="form-group">
             <label htmlFor="response">Response</label>
-            <select id="response" name="response" value={formData.response} onChange={handleChange}>
+            {/* <select id="response" name="response" value={formData.response} onChange={handleChange}> */}
+            <select id="response" name="response" value={formData.response} onChange={handleChange} disabled={formData.applicationStatus !== "Completed"}>
               <option value="Pending">Pending</option>
               <option value="Not Selected">Not Selected</option>
               <option value="Interview">Interview</option>
+              <option value="N/A" hidden>N/A</option>
             </select>
           </div>
           <div className="form-group">
