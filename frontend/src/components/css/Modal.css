@@ -39,8 +39,7 @@ form {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.form-group textarea[type="text"],
-.form-group select {
+.form-group textarea[type="text"] {
   /* font-size: 1.2rem;
   padding: 2px 4px; */
   font-family: Arial, Helvetica, sans-serif;
@@ -61,6 +60,8 @@ form {
 .form-group select {
   padding: 0px;
   height: 2rem;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
 }
 
 .submit-button {
@@ -84,4 +85,11 @@ form {
 label {
   font-size: 1.1rem;
   font-weight: bold;
+}
+
+:disabled, .form-group select:disabled {
+  cursor: not-allowed;
+  background-color: #eee;
+  opacity: 0.8;
+  border: 1px solid #ccc;
 }
