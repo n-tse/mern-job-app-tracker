@@ -9,14 +9,17 @@ function App() {
   const [jobsList, setJobsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [rowDataToEdit, setRowDataToEdit] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getJobsList();
         setJobsList(data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
 
@@ -24,20 +27,22 @@ function App() {
   }, []);
 
   const handleEditRow = (id) => {
-    const data = jobsList.filter(row => row._id === id && row);
+    const data = jobsList.filter((row) => row._id === id && row);
     // console.log(data[0]);
     setRowDataToEdit(data[0]);
     setShowModal(true);
-  }
+  };
 
   const closeModal = () => {
     setShowModal(false);
-    setRowDataToEdit({})
+    setRowDataToEdit({});
   };
 
   return (
     <div className="app-container">
-
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
         <div className="content-container">
           <div className="button-container">
             <button
@@ -48,9 +53,20 @@ function App() {
               Add Job
             </button>
           </div>
-          <Table jobsList={jobsList} setJobsList={setJobsList} handleEditRow={handleEditRow} />
+          <Table
+            jobsList={jobsList}
+            setJobsList={setJobsList}
+            handleEditRow={handleEditRow}
+          />
         </div>
-      {showModal && <Modal closeModal={closeModal} setJobsList={setJobsList} rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit} />}
+      )}
+      {showModal && (
+        <Modal
+          closeModal={closeModal}
+          setJobsList={setJobsList}
+          rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit}
+        />
+      )}
     </div>
   );
 }
