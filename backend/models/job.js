@@ -13,11 +13,11 @@ const JobSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  submissionDate: {
+  applicationStatus: {
     type: String,
     required: true,
   },
-  applicationStatus: {
+  submissionDate: {
     type: String,
     required: true,
   },

@@ -33,9 +33,10 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
   useEffect(() => {
     const updateResponseField = () => {
       if (formData.applicationStatus !== "Completed") {
-        setFormData({...formData, response: "N/A"})
+        setFormData({...formData, submissionDate: "N/A",  response: "N/A"})
       } else if (formData.response === "N/A") {
-        setFormData({...formData, response: "Pending"})
+        const todaysDate = getTodaysDate();
+        setFormData({...formData, submissionDate: todaysDate, response: "Pending"})
       }
     }
 
@@ -106,15 +107,6 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
             ></input>
           </div>
           <div className="form-group">
-            <label htmlFor="submissionDate">Submission Date</label>
-            <input
-              type="text"
-              name="submissionDate"
-              value={formData.submissionDate}
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className="form-group">
             <label htmlFor="applicationStatus">Application Status</label>
             <select name="applicationStatus" value={formData.applicationStatus} onChange={handleChange}>
               <option value="Completed">Completed</option>
@@ -123,8 +115,17 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
             </select>
           </div>
           <div className="form-group">
+            <label htmlFor="submissionDate">Submission Date</label>
+            <input
+              type="text"
+              name="submissionDate"
+              value={formData.submissionDate}
+              onChange={handleChange}
+              disabled={formData.applicationStatus !== "Completed"}
+            ></input>
+          </div>
+          <div className="form-group">
             <label htmlFor="response">Response</label>
-            {/* <select id="response" name="response" value={formData.response} onChange={handleChange}> */}
             <select id="response" name="response" value={formData.response} onChange={handleChange} disabled={formData.applicationStatus !== "Completed"}>
               <option value="Pending">Pending</option>
               <option value="Not Selected">Not Selected</option>
