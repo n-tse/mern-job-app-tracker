@@ -45,8 +45,9 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
 
   const handleAddNewJob = async (e) => {
     e.preventDefault();
+    const formDataWithDateModified = {...formData, _dateModified: new Date()}
     try {
-      await postJob(formData);
+      await postJob(formDataWithDateModified);
       setFormData(emptyFormValues);
 
       const jobsData = await getJobsList();
@@ -59,8 +60,9 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
 
   const handleUpdateJob = async (e) => {
     e.preventDefault();
+    const formDataWithDateModified = {...formData, _dateModified: new Date()}
     try {
-      await updateJob(rowValues._id, formData);
+      await updateJob(rowValues._id, formDataWithDateModified);
       setFormData(emptyFormValues);
 
       const jobsData = await getJobsList();
