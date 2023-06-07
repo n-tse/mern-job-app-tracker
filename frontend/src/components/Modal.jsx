@@ -14,6 +14,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
   };
 
   const [formData, setFormData] = useState(rowValues || emptyFormValues);
+  const [errors, setErrors] = useState([]);
 
   function getTodaysDate() {
     const date = new Date();
@@ -22,8 +23,38 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     month = month.length > 1 ? month : "0" + month;
     let day = date.getDate().toString();
     day = day.length > 1 ? day : "0" + day;
-    // return month + "/" + day + "/" + year;
     return `${year}-${month}-${day}`
+  }
+
+  const isMissingRequiredFields = () => {
+    if (!formData.title || !formData.company || !formData.url || !formData.submissionDate) {
+      let missingFields = [];
+      for (const [key, value] of Object.entries(formData)) {
+        if (key[0] !== "_" && key !== "notes" && value === "") {
+          missingFields.push(key);
+        }
+      }
+      setErrors(missingFields);
+      return true;
+    } else {
+      setErrors([]);
+      return false;
+    }
+  }
+
+  const formatField = (fieldName) => {
+    if (fieldName === "title") {
+      return "Job Title";
+    }
+    let capitalizedField = fieldName[0].toUpperCase();
+    for (let i = 1; i < fieldName.length; i++) {
+      if (fieldName[i].toUpperCase() === fieldName[i]) {
+        capitalizedField += " " + fieldName[i];
+      } else {
+        capitalizedField += fieldName[i];
+      }
+    }
+    return capitalizedField;
   }
 
   const handleChange = ({ target }) => {
@@ -46,6 +77,9 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
 
   const handleAddNewJob = async (e) => {
     e.preventDefault();
+    if (isMissingRequiredFields()) {
+      return;
+    };
     const formDataWithDateModified = {...formData, _dateModified: new Date()}
     try {
       await postJob(formDataWithDateModified);
@@ -61,6 +95,9 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
 
   const handleUpdateJob = async (e) => {
     e.preventDefault();
+    if (isMissingRequiredFields()) {
+      return;
+    };
     const formDataWithDateModified = {...formData, _dateModified: new Date()}
     try {
       await updateJob(rowValues._id, formDataWithDateModified);
@@ -147,6 +184,18 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
               onChange={handleChange}
             ></textarea>
           </div>
+          {errors.length > 0 && (
+            <div className="error-message">
+              Missing Fields:
+              <ul>
+                {errors.map((ele, idx) => 
+                  <li key={idx}>
+                    {formatField(ele)}
+                  </li>
+                )}
+              </ul>
+            </div>
+          )}
           <button type="submit" className="submit-button">
             {rowValues ? "Update Job" : "Add Job"}
           </button>
