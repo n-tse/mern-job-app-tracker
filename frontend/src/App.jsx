@@ -10,6 +10,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [rowDataToEdit, setRowDataToEdit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +58,8 @@ function App() {
             jobsList={jobsList}
             setJobsList={setJobsList}
             handleEditRow={handleEditRow}
+            page={page}
+            setPage={setPage}
           />
         </div>
       )}

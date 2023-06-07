@@ -1,7 +1,11 @@
 const Job = require("../models/Job");
 
-exports.getAllJobs = (req, res) => {
+exports.getJobs = (req, res) => {
+  const page = req.query.p || 0;
+  const jobsPerPage = 3;
   Job.find()
+    .skip(page * jobsPerPage)
+    .limit(jobsPerPage)
     .then((jobs) => res.status(200).json(jobs))
     .catch((e) =>
       res.status(404).json({ message: "Jobs not found", error: e.message })
