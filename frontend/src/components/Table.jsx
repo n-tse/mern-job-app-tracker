@@ -6,7 +6,7 @@ import { Tooltip } from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 
-const Table = ({ jobsList, setJobsList, handleEditRow, page, setPage }) => {
+const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
@@ -176,7 +176,7 @@ const Table = ({ jobsList, setJobsList, handleEditRow, page, setPage }) => {
           </tr>
         </thead>
         <tbody className="table-body">
-          {jobsList.map((job) => {
+          {jobsListSlice.map((job) => {
             const rowId = job._id;
             // console.log({ rowId });
             const isExpanded = expandedRow === rowId;
