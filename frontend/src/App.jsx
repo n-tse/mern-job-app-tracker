@@ -5,6 +5,7 @@ import Modal from "./components/Modal";
 import { getJobsList } from "./utils/handleApi";
 import { BsPlusLg } from "react-icons/bs";
 import PaginationBar from "./components/PaginationBar";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
@@ -12,8 +13,9 @@ function App() {
   const [rowDataToEdit, setRowDataToEdit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchableJobsList, setSearchableJobsList] = useState([]);
 
-  const jobsPerPage = 5;
+  const jobsPerPage = 3;
   const pageStart = currentPage * jobsPerPage;
   const pageEnd = pageStart + jobsPerPage;
   const lastPage = Math.ceil(jobsList.length / jobsPerPage) - 1;
@@ -24,6 +26,7 @@ function App() {
       try {
         const data = await getJobsList();
         setJobsList(data);
+        setSearchableJobsList(data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -61,6 +64,10 @@ function App() {
               Add Job
             </button>
           </div>
+          <SearchBar
+            searchableJobsList={searchableJobsList}
+            setJobsList={setJobsList}
+          />
           <Table
             jobsList={jobsList}
             jobsListSlice={jobsListSlice}
@@ -68,11 +75,13 @@ function App() {
             setJobsList={setJobsList}
             handleEditRow={handleEditRow}
           />
-          <PaginationBar
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            lastPage={lastPage}
-          />
+          {jobsList.length > 0 && (
+            <PaginationBar
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              lastPage={lastPage}
+            />
+          )}
         </div>
       )}
       {showModal && (
