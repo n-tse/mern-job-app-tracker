@@ -4,12 +4,20 @@ import Table from "./components/Table";
 import Modal from "./components/Modal";
 import { getJobsList } from "./utils/handleApi";
 import { BsPlusLg } from "react-icons/bs";
+import PaginationBar from "./components/PaginationBar";
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [rowDataToEdit, setRowDataToEdit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const jobsPerPage = 5;
+  const pageStart = currentPage * jobsPerPage;
+  const pageEnd = pageStart + jobsPerPage;
+  const lastPage = Math.ceil(jobsList.length / jobsPerPage) - 1;
+  const jobsListSlice = jobsList.slice(pageStart, pageEnd);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,22 +51,30 @@ function App() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="content-container">
-          <div className="button-container">
-            <button
-              className="add-job-button"
-              onClick={() => setShowModal(true)}
-            >
-              <BsPlusLg style={{ marginRight: 6 }} />
-              Add Job
-            </button>
+        <>
+          <div className="content-container">
+            <div className="button-container">
+              <button
+                className="add-job-button"
+                onClick={() => setShowModal(true)}
+              >
+                <BsPlusLg style={{ marginRight: 6 }} />
+                Add Job
+              </button>
+            </div>
+            <Table
+              jobsList={jobsList}
+              jobsListSlice={jobsListSlice}
+              setJobsList={setJobsList}
+              handleEditRow={handleEditRow}
+            />
           </div>
-          <Table
-            jobsList={jobsList}
-            setJobsList={setJobsList}
-            handleEditRow={handleEditRow}
+          <PaginationBar
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            lastPage={lastPage}
           />
-        </div>
+        </>
       )}
       {showModal && (
         <Modal
