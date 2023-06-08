@@ -2,9 +2,9 @@ import axios from "axios";
 
 // default table sort
 // sorts response data by dateModified from newest to oldest
-export const getJobsList = async (page = 0) => {
+export const getJobsList = async () => {
   try {
-    const response = await axios.get(`http://localhost:5001/jobs/?p=${page}`);
+    const response = await axios.get("http://localhost:5001/jobs/");
     const data = response.data;
     const sortedData = data.sort((a, b) => {
       const dateA = new Date(a._dateModified);

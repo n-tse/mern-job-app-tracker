@@ -27,12 +27,12 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
       setExpandedRow(rowId);
     }
   };
-
+  
   const formatDate = (date) => {
     if (date === "N/A") return "N/A";
     const dateArr = date.split("-");
     return `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`;
-  };
+  }
 
   const handleDeleteRow = async (id) => {
     const confirmation = confirm("Are you sure you want to delete this row?");
@@ -60,8 +60,7 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
       const copy = [...prevList];
       const sortOrder =
         copy.length > 0 &&
-        copy[0].submissionDate <
-          copy[copy.length - numberOfNAs - 1].submissionDate
+        copy[0].submissionDate < copy[copy.length - numberOfNAs - 1].submissionDate
           ? 1
           : -1;
 
@@ -108,26 +107,6 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
       : sortedEntries;
 
     setJobsList(newSortedEntries);
-  };
-
-  const handlePagination = async (operation) => {
-    try {
-      if (operation === "previous") {
-        if (page === 0) return;
-        const prevPage = page - 1;
-        const jobsData = await getJobsList(prevPage);
-        setPage(prevPage);
-        setJobsList(jobsData);
-      } else {
-        const nextPage = page + 1;
-        const jobsData = await getJobsList(nextPage);
-        if (jobsData.length === 0) return;
-        setPage(nextPage);
-        setJobsList(jobsData);
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -199,9 +178,9 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
                               <a href={`http://${job[field]}`} target="_blank">
                                 {job[field]}
                               </a>
-                            ) : field === "submissionDate" ? (
+                            ) : ( field === "submissionDate" ?
                               formatDate(job[field])
-                            ) : (
+                              :
                               job[field]
                             )}
                           </div>
@@ -243,8 +222,6 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
           })}
         </tbody>
       </table>
-      <button onClick={() => handlePagination("previous")}>previous</button>
-      <button onClick={() => handlePagination("next")}>next</button>
     </div>
   );
 };
