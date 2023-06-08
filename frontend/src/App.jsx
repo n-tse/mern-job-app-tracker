@@ -51,30 +51,28 @@ function App() {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <div className="content-container">
-            <div className="button-container">
-              <button
-                className="add-job-button"
-                onClick={() => setShowModal(true)}
-              >
-                <BsPlusLg style={{ marginRight: 6 }} />
-                Add Job
-              </button>
-            </div>
-            <Table
-              jobsList={jobsList}
-              jobsListSlice={jobsListSlice}
-              setJobsList={setJobsList}
-              handleEditRow={handleEditRow}
-            />
+        <div className="content-container">
+          <div className="button-container">
+            <button
+              className="add-job-button"
+              onClick={() => setShowModal(true)}
+            >
+              <BsPlusLg style={{ marginRight: 6 }} />
+              Add Job
+            </button>
           </div>
+          <Table
+            jobsList={jobsList}
+            jobsListSlice={jobsListSlice}
+            setJobsList={setJobsList}
+            handleEditRow={handleEditRow}
+          />
           <PaginationBar
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             lastPage={lastPage}
           />
-        </>
+        </div>
       )}
       {showModal && (
         <Modal
