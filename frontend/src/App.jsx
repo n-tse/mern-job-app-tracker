@@ -69,19 +69,24 @@ function App() {
             setJobsList={setJobsList}
             setCurrentPage={setCurrentPage}
           />
-          <Table
-            jobsList={jobsList}
-            jobsListSlice={jobsListSlice}
-            pageStart={pageStart}
-            setJobsList={setJobsList}
-            handleEditRow={handleEditRow}
-          />
-          {jobsList.length > 0 && (
-            <PaginationBar
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              lastPage={lastPage}
-            />
+          {jobsList.length > 0 ? (
+            <>
+              <Table
+                jobsList={jobsList}
+                jobsListSlice={jobsListSlice}
+                pageStart={pageStart}
+                setJobsList={setJobsList}
+                handleEditRow={handleEditRow}
+              />
+
+              <PaginationBar
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                lastPage={lastPage}
+              />
+            </>
+          ) : (
+            <div className="no-results-found">No Results Found</div>
           )}
         </div>
       )}
