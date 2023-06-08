@@ -146,6 +146,7 @@ const Table = ({
                           ? { cursor: "pointer" }
                           : {}
                       }
+                      className={field}
                     >
                       {convertToHeader(field)}
                       {(isString || isSubmissionDate) && (
@@ -158,7 +159,7 @@ const Table = ({
                   )
                 );
               })}
-            <th>Actions</th>
+            <th className="actions">Actions</th>
           </tr>
         </thead>
         <tbody className="table-body">
@@ -174,7 +175,11 @@ const Table = ({
                 {Object.keys(job).map((field, fieldIdx) => {
                   return (
                     field[0] !== "_" && (
-                      <td key={fieldIdx} onClick={() => handleCellClick(rowId)}>
+                      <td
+                        key={fieldIdx}
+                        className={field}
+                        onClick={() => handleCellClick(rowId)}
+                      >
                         <div className="cell-content">
                           <div
                             className={`text-content ${
@@ -182,9 +187,22 @@ const Table = ({
                             }`}
                           >
                             {field === "url" ? (
-                              <a href={`http://${job[field]}`} target="_blank">
-                                {job[field]}
-                              </a>
+                              <>
+                                <a
+                                  href={`http://${job[field]}`}
+                                  target="_blank"
+                                  data-tooltip-content={job[field]}
+                                  data-tooltip-id={`url-tooltip-${rowId}`}
+                                >
+                                  {job[field]}
+                                </a>
+                                <Tooltip
+                                  id={`url-tooltip-${rowId}`}
+                                  place="bottom"
+                                  effect="solid"
+                                  className="customized-tooltip"
+                                />
+                              </>
                             ) : field === "submissionDate" ? (
                               formatDate(job[field])
                             ) : (
@@ -196,8 +214,8 @@ const Table = ({
                     )
                   );
                 })}
-                <td>
-                  <span className="actions">
+                <td className="actions">
+                  <div className="icons-container">
                     <BsPencilSquare
                       id="edit-icon"
                       onClick={() => handleEditRow(rowId)}
@@ -222,7 +240,7 @@ const Table = ({
                       effect="solid"
                       className="customized-tooltip"
                     />
-                  </span>
+                  </div>
                 </td>
               </tr>
             );

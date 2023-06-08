@@ -1,43 +1,77 @@
 .table {
-  /* border: 1px solid black; */
   border-radius: 10px;
   border-collapse: collapse;
   font-family: Arial, Helvetica, sans-serif;
-  display: block;
   overflow: hidden;
-  table-layout: auto;
+  table-layout: fixed;
   box-shadow: 0 4px 10px rgb(170, 170, 170);
+  width: 100%;
 }
 
 .table thead {
-  /* background: rgb(238,174,202); */
   background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(187,181,220,1) 50%, rgba(148,187,233,1) 100%);
-  /* background-color:; */
-  /* background-image: linear-gradient(90deg, rgb(200, 200, 200),rgb(150, 150, 150)); */
   box-shadow: 0 2px 4px #ddd;
 }
 
-.table th, .table td {
-  padding: 1rem;
-  /* max-width: 250px; */
-  /* overflow: auto; */
-  /* text-overflow: ellipsis; */
-  /* white-space:nowrap; */
+.title {
+  width: 20%;
 }
 
-/* CSS */
-.cell-content {
-  max-width: 250px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  /* cursor: pointer; */
-  position: relative;
+.company {
+  width: 13%;
 }
+
+.url {
+  width: 14%;
+}
+
+.applicationStatus, .submissionDate, .response {
+  width: 10%;
+}
+
+.notes {
+  width: 15%;
+}
+
+.actions {
+  width: 8%;
+}
+
+.icons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table thead th {
+  padding: 1rem;
+  white-space:normal;
+} 
+
+.table tbody td {
+  padding: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  max-height: 2rem;
+}
+
+/* .cell-content .applicationStatus { */
+  /* position: relative; */
+  /* max-width: 250px; */
+  /* overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
+  /* cursor: pointer; */
+  /* display: flex;
+  justify-content: center;
+} */
 
 .text-content {
-  max-height: 1.5rem;
-  /* overflow: hidden; */
+  max-height: 2rem;
+  /* height: 2rem; */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .text-content.expanded {
@@ -45,12 +79,9 @@
 }
 
 .job-row.expanded .cell-content {
-  max-width: 250px;
   white-space: normal;
   overflow: auto;
 }
-
-
 
 .table td {
   cursor: pointer;
@@ -62,12 +93,6 @@
 
 .job-row:hover {
   background-color: #eee;
-}
-
-.actions{
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 #edit-icon {
