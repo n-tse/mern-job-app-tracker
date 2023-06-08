@@ -1,7 +1,7 @@
 import React from 'react';
 import './css/SearchBar.css'
 
-const SearchBar = ({ searchableJobsList, setJobsList }) => {
+const SearchBar = ({ searchableJobsList, setJobsList, setCurrentPage }) => {
   const handleChange = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     const searchResults = searchableJobsList.filter((entry) => {
@@ -10,6 +10,7 @@ const SearchBar = ({ searchableJobsList, setJobsList }) => {
       )
     });
     setJobsList(searchResults);
+    setCurrentPage(0);
   }
 
   return (

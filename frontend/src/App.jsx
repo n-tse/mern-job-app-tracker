@@ -67,6 +67,7 @@ function App() {
           <SearchBar
             searchableJobsList={searchableJobsList}
             setJobsList={setJobsList}
+            setCurrentPage={setCurrentPage}
           />
           <Table
             jobsList={jobsList}
