@@ -23,11 +23,16 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     month = month.length > 1 ? month : "0" + month;
     let day = date.getDate().toString();
     day = day.length > 1 ? day : "0" + day;
-    return `${year}-${month}-${day}`
+    return `${year}-${month}-${day}`;
   }
 
   const isMissingRequiredFields = () => {
-    if (!formData.title || !formData.company || !formData.url || !formData.submissionDate) {
+    if (
+      !formData.title ||
+      !formData.company ||
+      !formData.url ||
+      !formData.submissionDate
+    ) {
       let missingFields = [];
       for (const [key, value] of Object.entries(formData)) {
         if (key[0] !== "_" && key !== "notes" && value === "") {
@@ -40,7 +45,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
       setErrors([]);
       return false;
     }
-  }
+  };
 
   const formatField = (fieldName) => {
     if (fieldName === "title") {
@@ -55,32 +60,36 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
       }
     }
     return capitalizedField;
-  }
+  };
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setFormData({...formData, [name]: value});
+    setFormData({ ...formData, [name]: value });
   };
 
   useEffect(() => {
     const updateResponseField = () => {
       if (formData.applicationStatus !== "Completed") {
-        setFormData({...formData, submissionDate: "N/A",  response: "N/A"})
+        setFormData({ ...formData, submissionDate: "N/A", response: "N/A" });
       } else if (formData.response === "N/A") {
         const todaysDate = getTodaysDate();
-        setFormData({...formData, submissionDate: todaysDate, response: "Pending"})
+        setFormData({
+          ...formData,
+          submissionDate: todaysDate,
+          response: "Pending",
+        });
       }
-    }
+    };
 
     updateResponseField();
-  }, [formData.applicationStatus])
+  }, [formData.applicationStatus]);
 
   const handleAddNewJob = async (e) => {
     e.preventDefault();
     if (isMissingRequiredFields()) {
       return;
-    };
-    const formDataWithDateModified = {...formData, _dateModified: new Date()}
+    }
+    const formDataWithDateModified = { ...formData, _dateModified: new Date() };
     try {
       await postJob(formDataWithDateModified);
       setFormData(emptyFormValues);
@@ -97,8 +106,8 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     e.preventDefault();
     if (isMissingRequiredFields()) {
       return;
-    };
-    const formDataWithDateModified = {...formData, _dateModified: new Date()}
+    }
+    const formDataWithDateModified = { ...formData, _dateModified: new Date() };
     try {
       await updateJob(rowValues._id, formDataWithDateModified);
       setFormData(emptyFormValues);
@@ -116,7 +125,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
       className="modal-container"
       onClick={(e) => e.target.className === "modal-container" && closeModal()}
     >
-      {console.log('formData', formData)}
+      {/* {console.log("formData", formData)} */}
       <div className="modal">
         <form onSubmit={rowValues ? handleUpdateJob : handleAddNewJob}>
           <div className="form-group">
@@ -148,7 +157,11 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
           </div>
           <div className="form-group">
             <label htmlFor="applicationStatus">Application Status</label>
-            <select name="applicationStatus" value={formData.applicationStatus} onChange={handleChange}>
+            <select
+              name="applicationStatus"
+              value={formData.applicationStatus}
+              onChange={handleChange}
+            >
               <option value="Completed">Completed</option>
               <option value="In Progress">In Progress</option>
               <option value="Not Started">Not Started</option>
@@ -166,11 +179,19 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
           </div>
           <div className="form-group">
             <label htmlFor="response">Response</label>
-            <select id="response" name="response" value={formData.response} onChange={handleChange} disabled={formData.applicationStatus !== "Completed"}>
+            <select
+              id="response"
+              name="response"
+              value={formData.response}
+              onChange={handleChange}
+              disabled={formData.applicationStatus !== "Completed"}
+            >
               <option value="Pending">Pending</option>
               <option value="Not Selected">Not Selected</option>
               <option value="Interview">Interview</option>
-              <option value="N/A" hidden>N/A</option>
+              <option value="N/A" hidden>
+                N/A
+              </option>
             </select>
           </div>
           <div className="form-group">
@@ -180,7 +201,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
               name="notes"
               value={formData.notes}
               rows={4}
-              style={{resize:"none"}}
+              style={{ resize: "none" }}
               onChange={handleChange}
             ></textarea>
           </div>
@@ -188,11 +209,9 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
             <div className="error-message">
               Missing Fields:
               <ul>
-                {errors.map((ele, idx) => 
-                  <li key={idx}>
-                    {formatField(ele)}
-                  </li>
-                )}
+                {errors.map((ele, idx) => (
+                  <li key={idx}>{formatField(ele)}</li>
+                ))}
               </ul>
             </div>
           )}

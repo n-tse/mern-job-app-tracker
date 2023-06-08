@@ -27,12 +27,12 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
       setExpandedRow(rowId);
     }
   };
-  
+
   const formatDate = (date) => {
     if (date === "N/A") return "N/A";
     const dateArr = date.split("-");
     return `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`;
-  }
+  };
 
   const handleDeleteRow = async (id) => {
     const confirmation = confirm("Are you sure you want to delete this row?");
@@ -60,7 +60,8 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
       const copy = [...prevList];
       const sortOrder =
         copy.length > 0 &&
-        copy[0].submissionDate < copy[copy.length - numberOfNAs - 1].submissionDate
+        copy[0].submissionDate <
+          copy[copy.length - numberOfNAs - 1].submissionDate
           ? 1
           : -1;
 
@@ -178,9 +179,9 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
                               <a href={`http://${job[field]}`} target="_blank">
                                 {job[field]}
                               </a>
-                            ) : ( field === "submissionDate" ?
+                            ) : field === "submissionDate" ? (
                               formatDate(job[field])
-                              :
+                            ) : (
                               job[field]
                             )}
                           </div>
