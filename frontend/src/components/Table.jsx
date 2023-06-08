@@ -6,7 +6,13 @@ import { Tooltip } from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 
-const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
+const Table = ({
+  jobsList,
+  jobsListSlice,
+  pageStart,
+  setJobsList,
+  handleEditRow,
+}) => {
   const [expandedRow, setExpandedRow] = useState(null);
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
@@ -223,6 +229,9 @@ const Table = ({ jobsList, jobsListSlice, setJobsList, handleEditRow }) => {
           })}
         </tbody>
       </table>
+      <div className="entries-summary">
+        Showing {pageStart + 1} to {pageStart + jobsListSlice.length} of {jobsList.length} entries
+      </div>
     </div>
   );
 };

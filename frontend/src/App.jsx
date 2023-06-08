@@ -64,6 +64,7 @@ function App() {
           <Table
             jobsList={jobsList}
             jobsListSlice={jobsListSlice}
+            pageStart={pageStart}
             setJobsList={setJobsList}
             handleEditRow={handleEditRow}
           />
