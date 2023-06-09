@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/Modal.css";
 import { getJobsList, postJob, updateJob } from "../utils/handleApi";
+import { BsFillExclamationTriangleFill } from 'react-icons/bs'
 
 const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
   const emptyFormValues = {
@@ -14,7 +15,7 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
   };
 
   const [formData, setFormData] = useState(rowValues || emptyFormValues);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   function getTodaysDate() {
     const date = new Date();
@@ -33,38 +34,37 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
       !formData.url ||
       !formData.submissionDate
     ) {
-      let missingFields = [];
+      let errorsObj = {};
       for (const [key, value] of Object.entries(formData)) {
         if (key[0] !== "_" && key !== "notes" && value === "") {
-          missingFields.push(key);
-        }
+          errorsObj[key] = true;
+        } 
       }
-      setErrors(missingFields);
+      setErrors(errorsObj);
       return true;
     } else {
-      setErrors([]);
+      setErrors({});
       return false;
     }
   };
 
-  const formatField = (fieldName) => {
-    if (fieldName === "title") {
-      return "Job Title";
+  const isValidHttpUrl = (urlString) => {
+    try {
+      const url = new URL(urlString);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (error) {
+      return false;
     }
-    let capitalizedField = fieldName[0].toUpperCase();
-    for (let i = 1; i < fieldName.length; i++) {
-      if (fieldName[i].toUpperCase() === fieldName[i]) {
-        capitalizedField += " " + fieldName[i];
-      } else {
-        capitalizedField += fieldName[i];
-      }
-    }
-    return capitalizedField;
-  };
+  }
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
+    if (name === "applicationStatus" && value !== "Completed") {
+      let copy = {...errors};
+      delete copy.submissionDate;
+      setErrors(copy);
+    }
   };
 
   useEffect(() => {
@@ -127,7 +127,6 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
       className="modal-container"
       onClick={(e) => e.target.className === "modal-container" && closeModal()}
     >
-      {/* {console.log("formData", formData)} */}
       <div className="modal">
         <form onSubmit={rowValues ? handleUpdateJob : handleAddNewJob}>
           <div className="form-group">
@@ -137,7 +136,9 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
               name="title"
               value={formData.title}
               onChange={handleChange}
+              className={errors.title ? "error" : ""}
             ></input>
+            {errors.title && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/>Please enter job title</div>}
           </div>
           <div className="form-group">
             <label htmlFor="company">Company</label>
@@ -146,7 +147,9 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
               name="company"
               value={formData.company}
               onChange={handleChange}
+              className={errors.company ? "error" : ""}
             ></input>
+            {errors.company && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/> Please enter company name</div>}
           </div>
           <div className="form-group">
             <label htmlFor="url">Url</label>
@@ -155,7 +158,9 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
               name="url"
               value={formData.url}
               onChange={handleChange}
+              className={errors.url ? "error" : ""}
             ></input>
+            {errors.url && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/>Please enter company/job listing url</div>}
           </div>
           <div className="form-group">
             <label htmlFor="applicationStatus">Application Status</label>
@@ -176,8 +181,10 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
               name="submissionDate"
               value={formData.submissionDate}
               onChange={handleChange}
+              className={errors.submissionDate ? "error" : ""}
               disabled={formData.applicationStatus !== "Completed"}
             ></input>
+            {errors.submissionDate && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/>Please select a valid date</div>}
           </div>
           <div className="form-group">
             <label htmlFor="response">Response</label>
@@ -207,16 +214,6 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
               onChange={handleChange}
             ></textarea>
           </div>
-          {errors.length > 0 && (
-            <div className="error-message">
-              Missing Fields:
-              <ul>
-                {errors.map((ele, idx) => (
-                  <li key={idx}>{formatField(ele)}</li>
-                ))}
-              </ul>
-            </div>
-          )}
           <button type="submit" className="submit-button">
             {rowValues ? "Update Job" : "Add Job"}
           </button>

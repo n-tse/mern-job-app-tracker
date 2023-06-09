@@ -53,19 +53,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space:nowrap;
-  max-height: 2rem;
 }
-
-/* .cell-content .applicationStatus { */
-  /* position: relative; */
-  /* max-width: 250px; */
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; */
-  /* cursor: pointer; */
-  /* display: flex;
-  justify-content: center;
-} */
 
 .applicationStatus .cell-content, .submissionDate .cell-content, .response .cell-content {
   display: flex;
@@ -74,14 +62,14 @@
 }
 
 .text-content {
-  max-height: 2rem;
-  /* height: 2rem; */
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .text-content.expanded {
-  max-height: none;
+  max-height: 10rem;
+  overflow: visible;
+  white-space: pre-line;
 }
 
 .job-row.expanded .cell-content {
