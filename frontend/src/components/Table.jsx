@@ -5,6 +5,7 @@ import { getJobsList, deleteJob } from "../utils/handleApi";
 import { Tooltip } from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import Pager from "./Pager";
 
 const Table = ({
   jobsList,
@@ -12,6 +13,7 @@ const Table = ({
   pageStart,
   setJobsList,
   handleEditRow,
+  setJobsPerPage,
 }) => {
   const [expandedRow, setExpandedRow] = useState(null);
   const convertToHeader = (string) => {
@@ -250,6 +252,7 @@ const Table = ({
       <div className="entries-summary">
         Showing {pageStart + 1} to {pageStart + jobsListSlice.length} of {jobsList.length} entries
       </div>
+      <Pager setJobsPerPage={setJobsPerPage}/ >
     </div>
   );
 };

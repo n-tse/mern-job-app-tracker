@@ -14,8 +14,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchableJobsList, setSearchableJobsList] = useState([]);
+  const [jobsPerPage, setJobsPerPage] = useState(5);
 
-  const jobsPerPage = 3;
   const pageStart = currentPage * jobsPerPage;
   const pageEnd = pageStart + jobsPerPage;
   const lastPage = Math.ceil(jobsList.length / jobsPerPage) - 1;
@@ -77,6 +77,7 @@ function App() {
                 pageStart={pageStart}
                 setJobsList={setJobsList}
                 handleEditRow={handleEditRow}
+                setJobsPerPage={setJobsPerPage}
               />
 
               <PaginationBar
