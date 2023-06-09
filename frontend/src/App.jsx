@@ -97,6 +97,7 @@ function App() {
           closeModal={closeModal}
           setJobsList={setJobsList}
           rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit}
+          setCurrentPage={setCurrentPage}
         />
       )}
     </div>

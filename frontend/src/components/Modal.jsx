@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./css/Modal.css";
 import { getJobsList, postJob, updateJob } from "../utils/handleApi";
 
-const Modal = ({ closeModal, setJobsList, rowValues }) => {
+const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
   const emptyFormValues = {
     title: "",
     company: "",
@@ -99,6 +99,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     } catch (error) {
       console.log(error);
     }
+    setCurrentPage(0);
     closeModal();
   };
 
@@ -117,6 +118,7 @@ const Modal = ({ closeModal, setJobsList, rowValues }) => {
     } catch (error) {
       console.log(error);
     }
+    setCurrentPage(0);
     closeModal();
   };
 
