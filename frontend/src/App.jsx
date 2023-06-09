@@ -6,6 +6,7 @@ import { getJobsList } from "./utils/handleApi";
 import { BsPlusLg } from "react-icons/bs";
 import PaginationBar from "./components/PaginationBar";
 import SearchBar from "./components/SearchBar";
+import { NavBar } from "./components/NavBar";
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
@@ -50,57 +51,60 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="content-container">
-          <div className="button-container">
-            <button
-              className="add-job-button"
-              onClick={() => setShowModal(true)}
-            >
-              <BsPlusLg style={{ marginRight: 6 }} />
-              Add Job
-            </button>
+    <>
+      <NavBar />
+      <div className="app-container">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="content-container">
+            <div className="button-container">
+              <button
+                className="add-job-button"
+                onClick={() => setShowModal(true)}
+              >
+                <BsPlusLg style={{ marginRight: 6 }} />
+                Add Job
+              </button>
+            </div>
+            <SearchBar
+              searchableJobsList={searchableJobsList}
+              setJobsList={setJobsList}
+              setCurrentPage={setCurrentPage}
+            />
+            {jobsList.length > 0 ? (
+              <>
+                <Table
+                  jobsList={jobsList}
+                  jobsListSlice={jobsListSlice}
+                  pageStart={pageStart}
+                  jobsPerPage={jobsPerPage}
+                  setJobsList={setJobsList}
+                  handleEditRow={handleEditRow}
+                  setJobsPerPage={setJobsPerPage}
+                />
+
+                <PaginationBar
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  lastPage={lastPage}
+                />
+              </>
+            ) : (
+              <div className="no-results-found">No Results Found</div>
+            )}
           </div>
-          <SearchBar
-            searchableJobsList={searchableJobsList}
+        )}
+        {showModal && (
+          <Modal
+            closeModal={closeModal}
             setJobsList={setJobsList}
+            rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit}
             setCurrentPage={setCurrentPage}
           />
-          {jobsList.length > 0 ? (
-            <>
-              <Table
-                jobsList={jobsList}
-                jobsListSlice={jobsListSlice}
-                pageStart={pageStart}
-                jobsPerPage={jobsPerPage}
-                setJobsList={setJobsList}
-                handleEditRow={handleEditRow}
-                setJobsPerPage={setJobsPerPage}
-              />
-
-              <PaginationBar
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                lastPage={lastPage}
-              />
-            </>
-          ) : (
-            <div className="no-results-found">No Results Found</div>
-          )}
-        </div>
-      )}
-      {showModal && (
-        <Modal
-          closeModal={closeModal}
-          setJobsList={setJobsList}
-          rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit}
-          setCurrentPage={setCurrentPage}
-        />
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

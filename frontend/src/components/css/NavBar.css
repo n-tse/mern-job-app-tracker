@@ -1,0 +1,9 @@
+.nav-bar-container {
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  padding: 0 10px;
+  box-shadow: 0 2px 8px #ccc;
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 10%, rgb(185, 185, 239) 100%);
+}
