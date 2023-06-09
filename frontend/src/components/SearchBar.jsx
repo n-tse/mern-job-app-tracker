@@ -1,5 +1,6 @@
 import React from 'react';
-import './css/SearchBar.css'
+import './css/SearchBar.css';
+import { BsSearch } from 'react-icons/bs';
 
 const SearchBar = ({ searchableJobsList, setJobsList, setCurrentPage }) => {
   const handleChange = (e) => {
@@ -15,7 +16,8 @@ const SearchBar = ({ searchableJobsList, setJobsList, setCurrentPage }) => {
 
   return (
     <div className='search-bar-container'>
-      <input type="text" placeholder='Search...' onChange={handleChange}></input>
+      <BsSearch id="search-icon"/>
+      <input type="text" placeholder='Search...' onChange={handleChange} />
     </div>
   )
 }
