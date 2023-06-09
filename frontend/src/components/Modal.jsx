@@ -3,7 +3,7 @@ import "./css/Modal.css";
 import { getJobsList, postJob, updateJob } from "../utils/handleApi";
 import { BsFillExclamationTriangleFill } from 'react-icons/bs'
 
-const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
+const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) => {
   const emptyFormValues = {
     title: "",
     company: "",
@@ -95,7 +95,7 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
       setFormData(emptyFormValues);
 
       const jobsData = await getJobsList();
-      setJobsList(jobsData);
+      handleJobsListUpdate(jobsData);
     } catch (error) {
       console.log(error);
     }
@@ -114,7 +114,7 @@ const Modal = ({ closeModal, setJobsList, rowValues, setCurrentPage }) => {
       setFormData(emptyFormValues);
 
       const jobsData = await getJobsList();
-      setJobsList(jobsData);
+      handleJobsListUpdate(jobsData);
     } catch (error) {
       console.log(error);
     }

@@ -22,12 +22,16 @@ function App() {
   const lastPage = Math.ceil(jobsList.length / jobsPerPage) - 1;
   const jobsListSlice = jobsList.slice(pageStart, pageEnd);
 
+  const handleJobsListUpdate = (data) => {
+    setJobsList(data);
+    setSearchableJobsList(data);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getJobsList();
-        setJobsList(data);
-        setSearchableJobsList(data);
+        handleJobsListUpdate(data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -80,6 +84,7 @@ function App() {
                   pageStart={pageStart}
                   jobsPerPage={jobsPerPage}
                   setJobsList={setJobsList}
+                  handleJobsListUpdate={handleJobsListUpdate}
                   handleEditRow={handleEditRow}
                   setJobsPerPage={setJobsPerPage}
                 />
@@ -98,7 +103,7 @@ function App() {
         {showModal && (
           <Modal
             closeModal={closeModal}
-            setJobsList={setJobsList}
+            handleJobsListUpdate={handleJobsListUpdate}
             rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit}
             setCurrentPage={setCurrentPage}
           />

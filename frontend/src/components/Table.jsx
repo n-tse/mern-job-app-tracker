@@ -13,6 +13,7 @@ const Table = ({
   pageStart,
   jobsPerPage,
   setJobsList,
+  handleJobsListUpdate,
   handleEditRow,
   setJobsPerPage,
 }) => {
@@ -49,7 +50,7 @@ const Table = ({
       try {
         await deleteJob(id);
         const jobsData = await getJobsList();
-        setJobsList(jobsData);
+        handleJobsListUpdate(jobsData);
       } catch (error) {
         console.log(error);
       }
