@@ -193,7 +193,7 @@ const Table = ({
                             {field === "url" ? (
                               <>
                                 <a
-                                  href={`http://${job[field]}`}
+                                  href={job[field]}
                                   target="_blank"
                                   data-tooltip-content={job[field]}
                                   data-tooltip-id={`url-tooltip-${rowId}`}

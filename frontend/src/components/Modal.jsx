@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./css/Modal.css";
 import { getJobsList, postJob, updateJob } from "../utils/handleApi";
-import { BsFillExclamationTriangleFill } from 'react-icons/bs'
+import { BsFillExclamationTriangleFill } from "react-icons/bs";
 
-const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) => {
+const Modal = ({
+  closeModal,
+  handleJobsListUpdate,
+  rowValues,
+  setCurrentPage,
+}) => {
   const emptyFormValues = {
     title: "",
     company: "",
@@ -16,6 +21,7 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
 
   const [formData, setFormData] = useState(rowValues || emptyFormValues);
   const [errors, setErrors] = useState({});
+  const [urlCheck, setUrlCheck] = useState(true);
 
   function getTodaysDate() {
     const date = new Date();
@@ -38,7 +44,7 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
       for (const [key, value] of Object.entries(formData)) {
         if (key[0] !== "_" && key !== "notes" && value === "") {
           errorsObj[key] = true;
-        } 
+        }
       }
       setErrors(errorsObj);
       return true;
@@ -51,17 +57,21 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
   const isValidHttpUrl = (urlString) => {
     try {
       const url = new URL(urlString);
-      return url.protocol === 'http:' || url.protocol === 'https:';
+      const result = url.protocol === "http:" || url.protocol === "https:";
+      setUrlCheck(result);
+      return result;
     } catch (error) {
-      return false;
+      // will print "TypeError: Failed to construct 'URL': Invalid URL"
+      // console.log(error);
+      setUrlCheck(false);
     }
-  }
+  };
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
     if (name === "applicationStatus" && value !== "Completed") {
-      let copy = {...errors};
+      let copy = { ...errors };
       delete copy.submissionDate;
       setErrors(copy);
     }
@@ -86,7 +96,13 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
 
   const handleAddNewJob = async (e) => {
     e.preventDefault();
-    if (isMissingRequiredFields()) {
+    setUrlCheck(true);
+    if (formData.url && !isValidHttpUrl(formData.url)) {
+      if (isMissingRequiredFields()) {
+        return;
+      }
+      return;
+    } else if (isMissingRequiredFields()) {
       return;
     }
     const formDataWithDateModified = { ...formData, _dateModified: new Date() };
@@ -105,7 +121,13 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
 
   const handleUpdateJob = async (e) => {
     e.preventDefault();
-    if (isMissingRequiredFields()) {
+    setUrlCheck(true);
+    if (formData.url && !isValidHttpUrl(formData.url)) {
+      if (isMissingRequiredFields()) {
+        return;
+      }
+      return;
+    } else if (isMissingRequiredFields()) {
       return;
     }
     const formDataWithDateModified = { ...formData, _dateModified: new Date() };
@@ -138,7 +160,12 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
               onChange={handleChange}
               className={errors.title ? "error" : ""}
             ></input>
-            {errors.title && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/>Please enter job title</div>}
+            {errors.title && (
+              <div className="error-message">
+                <BsFillExclamationTriangleFill className="error-icon" />
+                Please enter job title
+              </div>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="company">Company</label>
@@ -149,7 +176,12 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
               onChange={handleChange}
               className={errors.company ? "error" : ""}
             ></input>
-            {errors.company && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/> Please enter company name</div>}
+            {errors.company && (
+              <div className="error-message">
+                <BsFillExclamationTriangleFill className="error-icon" /> Please
+                enter company name
+              </div>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="url">Url</label>
@@ -158,9 +190,27 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
               name="url"
               value={formData.url}
               onChange={handleChange}
-              className={errors.url ? "error" : ""}
+              className={
+                formData.url && !urlCheck
+                  ? "invalid-url"
+                  : errors.url
+                  ? "error"
+                  : ""
+              }
             ></input>
-            {errors.url && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/>Please enter company/job listing url</div>}
+            {!urlCheck ? (
+              <div className="error-message">
+                <BsFillExclamationTriangleFill className="error-icon" />
+                Please enter a valid http:// or https:// url
+              </div>
+            ) : (
+              errors.url && (
+                <div className="error-message">
+                  <BsFillExclamationTriangleFill className="error-icon" />
+                  Please enter company/job listing url
+                </div>
+              )
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="applicationStatus">Application Status</label>
@@ -184,7 +234,12 @@ const Modal = ({ closeModal, handleJobsListUpdate, rowValues, setCurrentPage }) 
               className={errors.submissionDate ? "error" : ""}
               disabled={formData.applicationStatus !== "Completed"}
             ></input>
-            {errors.submissionDate && <div className="error-message"><BsFillExclamationTriangleFill className="error-icon"/>Please select a valid date</div>}
+            {errors.submissionDate && (
+              <div className="error-message">
+                <BsFillExclamationTriangleFill className="error-icon" />
+                Please select a valid date
+              </div>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="response">Response</label>
