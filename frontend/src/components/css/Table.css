@@ -67,6 +67,12 @@
   justify-content: center;
 } */
 
+.applicationStatus .cell-content, .submissionDate .cell-content, .response .cell-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .text-content {
   max-height: 2rem;
   /* height: 2rem; */
