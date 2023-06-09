@@ -75,6 +75,7 @@ function App() {
                 jobsList={jobsList}
                 jobsListSlice={jobsListSlice}
                 pageStart={pageStart}
+                jobsPerPage={jobsPerPage}
                 setJobsList={setJobsList}
                 handleEditRow={handleEditRow}
                 setJobsPerPage={setJobsPerPage}

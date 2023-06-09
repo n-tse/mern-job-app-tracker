@@ -1,7 +1,7 @@
 import React from "react";
 import "./css/Pager.css";
 
-const Pager = ({ setJobsPerPage }) => {
+const Pager = ({ jobsPerPage, setJobsPerPage }) => {
   const handleChange = (e) => {
     const num = parseInt(e.target.value);
     setJobsPerPage(num)
@@ -13,6 +13,7 @@ const Pager = ({ setJobsPerPage }) => {
       Show{" "}
       <select
         id="entries-per-page"
+        value={jobsPerPage}
         onChange={handleChange}
         style={{
           borderRadius: "4px",

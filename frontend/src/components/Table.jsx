@@ -11,6 +11,7 @@ const Table = ({
   jobsList,
   jobsListSlice,
   pageStart,
+  jobsPerPage,
   setJobsList,
   handleEditRow,
   setJobsPerPage,
@@ -252,7 +253,7 @@ const Table = ({
       <div className="entries-summary">
         Showing {pageStart + 1} to {pageStart + jobsListSlice.length} of {jobsList.length} entries
       </div>
-      <Pager setJobsPerPage={setJobsPerPage}/ >
+      <Pager jobsPerPage={jobsPerPage} setJobsPerPage={setJobsPerPage}/ >
     </div>
   );
 };
