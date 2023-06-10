@@ -114,3 +114,22 @@
   font-size: 14px;
   z-index: 1;
 }
+
+.responseData {
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.response-Declined {
+  background-color:steelblue;
+  color: white;
+}
+
+.response-Pending {
+  background-color: gainsboro;
+}
+
+.response-Interview {
+  background-color: green;
+  color: white;
+}

@@ -210,6 +210,8 @@ const Table = ({
                               </>
                             ) : field === "submissionDate" ? (
                               formatDate(job[field])
+                            ) : field === "response" ? (
+                              <div className={`responseData response-${job[field]}`}>{job[field]}</div>
                             ) : (
                               job[field]
                             )}
