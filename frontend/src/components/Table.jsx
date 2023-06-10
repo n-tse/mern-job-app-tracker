@@ -16,6 +16,7 @@ const Table = ({
   handleJobsListUpdate,
   handleEditRow,
   setJobsPerPage,
+  setCurrentPage,
 }) => {
   const [expandedRow, setExpandedRow] = useState(null);
   const convertToHeader = (string) => {
@@ -254,7 +255,7 @@ const Table = ({
       <div className="entries-summary">
         Showing {pageStart + 1} to {pageStart + jobsListSlice.length} of {jobsList.length} entries
       </div>
-      <Pager jobsPerPage={jobsPerPage} setJobsPerPage={setJobsPerPage}/ >
+      <Pager jobsPerPage={jobsPerPage} setJobsPerPage={setJobsPerPage} setCurrentPage={setCurrentPage} / >
     </div>
   );
 };

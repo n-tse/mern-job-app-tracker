@@ -87,6 +87,7 @@ function App() {
                   handleJobsListUpdate={handleJobsListUpdate}
                   handleEditRow={handleEditRow}
                   setJobsPerPage={setJobsPerPage}
+                  setCurrentPage={setCurrentPage}
                 />
 
                 <PaginationBar

@@ -1,10 +1,11 @@
 import React from "react";
 import "./css/Pager.css";
 
-const Pager = ({ jobsPerPage, setJobsPerPage }) => {
+const Pager = ({ jobsPerPage, setJobsPerPage, setCurrentPage }) => {
   const handleChange = (e) => {
     const num = parseInt(e.target.value);
-    setJobsPerPage(num)
+    setCurrentPage(0);
+    setJobsPerPage(num);
   }
 
   return (
