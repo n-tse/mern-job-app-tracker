@@ -14,7 +14,7 @@ const Modal = ({
     company: "",
     url: "",
     submissionDate: getTodaysDate(),
-    applicationStatus: "Completed",
+    applicationStatus: "Submitted",
     response: "Pending",
     notes: "",
   };
@@ -70,7 +70,7 @@ const Modal = ({
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
-    if (name === "applicationStatus" && value !== "Completed") {
+    if (name === "applicationStatus" && value !== "Submitted") {
       let copy = { ...errors };
       delete copy.submissionDate;
       setErrors(copy);
@@ -79,7 +79,7 @@ const Modal = ({
 
   useEffect(() => {
     const updateResponseField = () => {
-      if (formData.applicationStatus !== "Completed") {
+      if (formData.applicationStatus !== "Submitted") {
         setFormData({ ...formData, submissionDate: "N/A", response: "N/A" });
       } else if (formData.response === "N/A") {
         const todaysDate = getTodaysDate();
@@ -213,7 +213,7 @@ const Modal = ({
               value={formData.applicationStatus}
               onChange={handleChange}
             >
-              <option value="Completed">Completed</option>
+              <option value="Submitted">Submitted</option>
               <option value="In Progress">In Progress</option>
               <option value="Not Started">Not Started</option>
             </select>
@@ -226,7 +226,7 @@ const Modal = ({
               value={formData.submissionDate}
               onChange={handleChange}
               className={errors.submissionDate ? "error" : ""}
-              disabled={formData.applicationStatus !== "Completed"}
+              disabled={formData.applicationStatus !== "Submitted"}
             ></input>
             {errors.submissionDate && (
               <div className="error-message">
@@ -242,10 +242,10 @@ const Modal = ({
               name="response"
               value={formData.response}
               onChange={handleChange}
-              disabled={formData.applicationStatus !== "Completed"}
+              disabled={formData.applicationStatus !== "Submitted"}
             >
               <option value="Pending">Pending</option>
-              <option value="Not Selected">Not Selected</option>
+              <option value="Declined">Declined</option>
               <option value="Interview">Interview</option>
               <option value="N/A" hidden>
                 N/A
