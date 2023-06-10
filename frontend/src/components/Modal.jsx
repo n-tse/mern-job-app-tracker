@@ -190,13 +190,7 @@ const Modal = ({
               name="url"
               value={formData.url}
               onChange={handleChange}
-              className={
-                formData.url && !urlCheck
-                  ? "invalid-url"
-                  : errors.url
-                  ? "error"
-                  : ""
-              }
+              className={!urlCheck || errors.url ? "error" : ""}
             ></input>
             {!urlCheck ? (
               <div className="error-message">

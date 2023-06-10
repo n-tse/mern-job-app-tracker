@@ -6,7 +6,7 @@ export const NavBar = () => {
   return (
     <div className="nav-bar-container">
       <img src={GreatJobLogo} style={{ width: 80, height: 80 }} />
-      <em>Job Tracker<br/>Application</em>
+      <em>Job App<br/>Tracker</em>
     </div>
   );
 };
