@@ -27,6 +27,15 @@
 }
 
 #search-icon {
-  margin: 0 10px;
-  color: rgb(100, 100, 100)
+  margin: 0 8px 0 10px;
+  color: rgb(100, 100, 100);
+  flex-shrink: 0;
+}
+
+#clear-text-icon {
+  margin: 0 6px 0 4px;
+  color: rgb(100, 100, 100);
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
 }
