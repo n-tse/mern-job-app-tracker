@@ -4,7 +4,8 @@ import axios from "axios";
 // sorts response data by dateModified from newest to oldest
 export const getJobsList = async () => {
   try {
-    const response = await axios.get("http://localhost:5001/jobs/");
+    const response = await axios.get("https://ntse-mern-job-app-tracker.onrender.com/jobs");
+    // const response = await axios.get("http://localhost:5001/jobs/");
     const data = response.data;
     const sortedData = data.sort((a, b) => {
       const dateA = new Date(a._dateModified);
@@ -19,7 +20,8 @@ export const getJobsList = async () => {
 
 export const postJob = async (formData) => {
   try {
-    const response = await axios.post("http://localhost:5001/jobs/", formData);
+    const response = await axios.post("https://ntse-mern-job-app-tracker.onrender.com/jobs", formData);
+    // const response = await axios.post("http://localhost:5001/jobs/", formData);
     return response;
   } catch (error) {
     console.log(error);
@@ -29,9 +31,13 @@ export const postJob = async (formData) => {
 export const updateJob = async (id, updatedEntry) => {
   try {
     const response = await axios.put(
-      `http://localhost:5001/jobs/${id}`,
+      `https://ntse-mern-job-app-tracker.onrender.com/jobs/${id}`,
       updatedEntry
     );
+    // const response = await axios.put(
+    //   `http://localhost:5001/jobs/${id}`,
+    //   updatedEntry
+    // );
     return response;
   } catch (error) {
     console.log(error);
@@ -40,7 +46,8 @@ export const updateJob = async (id, updatedEntry) => {
 
 export const deleteJob = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:5001/jobs/${id}`);
+    const response = await axios.delete(`https://ntse-mern-job-app-tracker.onrender.com/jobs/${id}`);
+    // const response = await axios.delete(`http://localhost:5001/jobs/${id}`);
     return response;
   } catch (error) {
     console.log(error);
