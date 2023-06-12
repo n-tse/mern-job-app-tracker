@@ -7,6 +7,7 @@ import { BsPlusLg } from "react-icons/bs";
 import PaginationBar from "./components/PaginationBar";
 import SearchBar from "./components/SearchBar";
 import { NavBar } from "./components/NavBar";
+import DeleteConfirmation from "./components/DeleteConfirmation";
 
 function App() {
   const [jobsList, setJobsList] = useState([]);
@@ -16,6 +17,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchableJobsList, setSearchableJobsList] = useState([]);
   const [jobsPerPage, setJobsPerPage] = useState(5);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [rowToDeleteId, setRowToDeleteId] = useState();
   const [loadingMessage, setLoadingMessage] = useState("Loading");
 
   const pageStart = currentPage * jobsPerPage;
@@ -41,9 +44,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getJobsList();
-        handleJobsListUpdate(data);
-        setIsLoading(false);
+          const data = await getJobsList();
+          handleJobsListUpdate(data);
+          setIsLoading(false);
       } catch (error) {
         console.log(error);
         setIsLoading(false);
@@ -59,6 +62,11 @@ function App() {
     setRowDataToEdit(data[0]);
     setShowModal(true);
   };
+
+  const handleDeleteRow = (id) => {
+    setRowToDeleteId(id);
+    setShowDeleteConfirmation(true);
+  }
 
   const closeModal = () => {
     setShowModal(false);
@@ -100,8 +108,9 @@ function App() {
                   pageStart={pageStart}
                   jobsPerPage={jobsPerPage}
                   setJobsList={setJobsList}
-                  handleJobsListUpdate={handleJobsListUpdate}
+
                   handleEditRow={handleEditRow}
+                  handleDeleteRow={handleDeleteRow}
                   setJobsPerPage={setJobsPerPage}
                   setCurrentPage={setCurrentPage}
                 />
@@ -124,6 +133,9 @@ function App() {
             rowValues={Object.keys(rowDataToEdit).length && rowDataToEdit}
             setCurrentPage={setCurrentPage}
           />
+        )}
+        {showDeleteConfirmation && (
+          <DeleteConfirmation rowToDeleteId={rowToDeleteId} setShowDeleteConfirmation={ setShowDeleteConfirmation } handleJobsListUpdate={handleJobsListUpdate}/>
         )}
       </div>
     </>

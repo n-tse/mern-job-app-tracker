@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./css/Table.css";
 import { BsPencilSquare, BsFillTrashFill, BsArrowDownUp } from "react-icons/bs";
-import { getJobsList, deleteJob } from "../utils/handleApi";
+
 import { Tooltip } from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
@@ -13,12 +13,13 @@ const Table = ({
   pageStart,
   jobsPerPage,
   setJobsList,
-  handleJobsListUpdate,
   handleEditRow,
+  handleDeleteRow,
   setJobsPerPage,
   setCurrentPage,
 }) => {
   const [expandedRow, setExpandedRow] = useState(null);
+
   const convertToHeader = (string) => {
     let res = string[0].toUpperCase();
     for (let i = 1; i < string.length; i++) {
@@ -43,21 +44,6 @@ const Table = ({
     if (date === "N/A") return "N/A";
     const dateArr = date.split("-");
     return `${dateArr[1]}/${dateArr[2]}/${dateArr[0]}`;
-  };
-
-  const handleDeleteRow = async (id) => {
-    const confirmation = confirm("Are you sure you want to delete this row?");
-    if (confirmation) {
-      try {
-        await deleteJob(id);
-        const jobsData = await getJobsList();
-        handleJobsListUpdate(jobsData);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      return;
-    }
   };
 
   const handleSubmissionDateClick = () => {
