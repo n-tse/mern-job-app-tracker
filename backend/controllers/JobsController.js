@@ -1,4 +1,4 @@
-const Job = require("../models/Job.js");
+const Job = require('../models/job');
 
 exports.getAllJobs = (req, res) => {
   Job.find()
