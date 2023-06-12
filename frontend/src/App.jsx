@@ -16,6 +16,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchableJobsList, setSearchableJobsList] = useState([]);
   const [jobsPerPage, setJobsPerPage] = useState(5);
+  const [loadingMessage, setLoadingMessage] = useState("Loading");
 
   const pageStart = currentPage * jobsPerPage;
   const pageEnd = pageStart + jobsPerPage;
@@ -25,7 +26,17 @@ function App() {
   const handleJobsListUpdate = (data) => {
     setJobsList(data);
     setSearchableJobsList(data);
-  }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (loadingMessage === "Loading...") {
+        setLoadingMessage("Loading");
+      } else {
+        setLoadingMessage((prev) => prev + ".");
+      }
+    }, 800);
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +70,12 @@ function App() {
       <NavBar />
       <div className="app-container">
         {isLoading ? (
-          <div>Loading...</div>
+          <div className="loader-container">
+            <div className="loading-message">
+              {loadingMessage} (this may take a moment)
+            </div>
+            <div className="spinner"></div>
+          </div>
         ) : (
           <div className="content-container">
             <div className="button-container">
