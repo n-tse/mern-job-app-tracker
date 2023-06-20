@@ -4,8 +4,11 @@ _**GreatJob**_ is a full-stack application built using the MERN (MongoDB, Expres
 
 ## Demo
 
-Check out the live demo of my app! **(it may take ~30 seconds to load upon cold startup due to Render.com service restrictions)
-[Live Demo](https://ntse-mern-job-app-tracker-client.onrender.com/)
+![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdzNWhubDB6cG15ZXBpcnRtZTZlZXFhMzR3am5ldmhoOWJlYXpwMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C8ZqsUiVppCy5O3OXi/giphy.gif)
+
+Check out the live demo of my app! [Live Demo](https://ntse-mern-job-app-tracker-client.onrender.com/)
+**(it may take ~30 seconds to load upon cold startup due to Render.com service restrictions)
+
 
 ## Key Features
 
