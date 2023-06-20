@@ -1,16 +1,16 @@
-# _**GreatJob**_ - A Job Application Tracking App
+# **GreatJob** - A Job Application Tracking App
 
 _**GreatJob**_ is a full-stack application built using the MERN (MongoDB, Express, React, Node.js) stack. It's an application I built to help me keep track of the jobs I've applied for, and overall help me visualize the progress of my job search journey. Through the app, I'm able to add or update details about a job application (such as job title, company name, job listing URL, and submission date), delete an entry, and search/sort all the available entries to find a particular one I'm looking for. 
 
 ## Demo
 
-![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdzNWhubDB6cG15ZXBpcnRtZTZlZXFhMzR3am5ldmhoOWJlYXpwMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C8ZqsUiVppCy5O3OXi/giphy.gif)
+https://github.com/n-tse/mern-job-app-tracker/assets/101606128/17375e6f-9e78-4d16-866b-b6648a9b3441
 
-Check out the live demo of my app! [Live Demo](https://ntse-mern-job-app-tracker-client.onrender.com/)
+Check out the live demo of my app! [Live Demo](https://ntse-mern-job-app-tracker-client.onrender.com/)\
 **(it may take ~30 seconds to load upon cold startup due to Render.com service restrictions)
 
 
-## Key Features
+## Features
 
 - **Job Entry:** Add details about new job applications, including job title, company name, job posting URL, submission date, application status, response status, and any miscellaneous notes.
 - **Table View:** View all job application details in a tabular format, making it easy to review and manage entries.
@@ -22,7 +22,15 @@ Check out the live demo of my app! [Live Demo](https://ntse-mern-job-app-tracker
 
 ## Tech Stack
 
-React, Node.js, MongoDB, HTML, CSS, Express, React-icons
+GreatJob is built with the following technologies:
+
+- React: A JavaScript library for building interactive and reusable user interfaces.
+- Node.js: A runtime environment that allows executing JavaScript code on the server-side.
+- MongoDB: A NoSQL database that provides a flexible, scalable, and document-oriented approach to data storage.
+- HTML: The standard markup language for creating the structure and content of web pages.
+- CSS: A styling language used to describe the presentation and layout of HTML documents.
+- Express.js: A fast and minimalist web application framework for Node.js that simplifies the creation of robust APIs and web applications.
+- React-icons: A library that provides a vast collection of customizable icons for React applications, making it easy to incorporate visually appealing icons into your UI.
 
 <p align="left">
   <a href="https://reactjs.org/" target="_blank" rel="noreferrer">
@@ -48,5 +56,11 @@ React, Node.js, MongoDB, HTML, CSS, Express, React-icons
   </a>
 </p>
 
+## Contributing
+
+Contributions to GreatJob are welcome. If you have any suggestions, improvements, or bug fixes, please submit a pull request. For major changes, please open an issue first to discuss the proposed changes.
+
 ## License
+
+GreatJob is open-source software licensed under the [MIT License](LICENSE).\
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
